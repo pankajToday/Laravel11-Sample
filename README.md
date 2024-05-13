@@ -9,10 +9,7 @@
 
 ## Sample Laravel Project : v.11 
 
-This is Laravel sample project. Intended to ready to use quickly with Frontend VUE-JS. 
-So all essential tool, packages and services is already installed.
-You have to modify this based on project demand. 
-Packages and Services mentioned bellow:
+This is a Laravel sample project. Intended to be ready to use quickly with Frontend VUE-JS. So all essential tools, packages and services are already installed. You have to modify this based on project demand. Packages and Services are mentioned below:
 
 Composer Packages :
 
@@ -55,7 +52,7 @@ Contact Us [Email](mailto:p1608088@gmail.com) , [Portfolio](https://my-react-por
 
 ## Laravel Sponsors
 
-We would like to work with us and sponsors for funding my development. If you are interested then [Email](mailto:p1608088@gmail.com) 
+We would like to work with us and sponsors to fund my development. If you are interested then [Email](mailto:p1608088@gmail.com) 
 
 
 ## Security Vulnerabilities
