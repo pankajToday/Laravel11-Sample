@@ -44,7 +44,7 @@ Open terminal and run the code :
 
     php artisan serve 
 
-    npm run dev
+    npm run dev --legacy-peer-deps
 
 ## Contact For Software Development / Hire Developer
 
