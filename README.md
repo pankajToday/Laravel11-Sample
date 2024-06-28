@@ -9,7 +9,9 @@
 
 ## Sample Laravel Project : v.11 
 
-This is a Laravel sample project. Intended to be ready to use quickly with Frontend VUE-JS. So all essential tools, packages and services are already installed. You have to modify this based on project demand. Packages and Services are mentioned below:
+To Get Started ASAP Using the most recent version of Laravel 11, the Laravel project combines Inertia.js and Vue.js 3 to produce a smooth single-page application experience. Sturdy routing, state management, and dynamic component rendering are among its key components. Although Inertia.js fills the gap between Laravel and Vue by offering a contemporary, reactive interface without the need for conventional page reloads, Vue.js pages are designed to maximize user interaction. This combination uses the flexibility of Vue's front end and the strength of Laravel's backend features to create a unified, effective, and dynamic online application.
+
+Packages and Services are mentioned below:
 
 Composer Packages :
 
