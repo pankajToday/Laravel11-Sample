@@ -14,7 +14,8 @@ return new class extends Migration
 
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',30);
+            $table->string('slug',30);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -22,10 +23,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id')->default(2);
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('name',80);
+            $table->string('email',80)->unique();;
             $table->string('password');
+            $table->string('mobile',10)->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('mobile_verified')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -60,8 +63,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('email_verification');
         Schema::dropIfExists('sessions');
     }
 };

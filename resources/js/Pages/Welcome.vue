@@ -1,189 +1,1522 @@
 <template>
-    <Head title="Login" />
+    <Head title="Welcome"  ></Head>
 
+    <WebLayout >
+        <div>
+            <!-- Hero Section -->
+            <section id="hero" class="hero section dark-background">
+                <img src="assets/img/hero-bg-2.jpg" alt="" class="hero-bg" />
 
-    <div class="w-full h-screen bg-white">
-        <div class="flex items-center w-full h-full">
-            <div v-if="logIn" class="w-[480px] h-[500px] bg-[#333333] bg-opacity-70 mx-auto rounded-[30px] shadow-sm px-[70px] py-[30px]">
-                <img alt="logo" class="mx-auto w-[150px]" src="/project-assets/img/login.png">
-                <div class="text-[21px] text-white font-normal mt-4">Login</div>
-                <!--<div class="text-[12px] font-normal">Don’t have an account?
-                    <a href="/register" class="font-semibold underline">Sign up</a></div>-->
-                <div class="w-full">
-                    <input v-model="email" type="email" class="w-full rounded-lg h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" maxlength="40" placeholder="Your email">
-                    <span v-if="errors && errors.email" class="text-xs text-red-600">Error : {{ errors.email[0]}}</span>
+                <div class="container">
+                    <div class="row gy-4 justify-content-between">
+                        <div
+                                class="col-lg-4 order-lg-last hero-img"
+                                data-aos="zoom-out"
+                                data-aos-delay="100"
+                        >
+                            <img
+                                    src="assets/img/hero-img.png"
+                                    class="img-fluid animated"
+                                    alt=""
+                            />
+                        </div>
 
-                    <input v-model="password" type="password" class="w-full rounded-lg h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080] mt-3" maxlength="10" placeholder="Password">
-                    <span v-if="errors && errors.password" class="text-xs  text-red-600">Error : {{ errors.password[0]}}</span>
-
-                    <div @click.prevent="forgetPwd=true,logIn=false" class="mt-3 text-white underline text-xs font-normal cursor-pointer">Forgot password?</div>
-                    <button @click="Login" class="w-full mt-8 bg-black text-white border-2 border-[#383838] h-12 rounded-xl text-[17px] font-medium">Log In</button>
+                        <div
+                                class="col-lg-6 d-flex flex-column justify-content-center"
+                                data-aos="fade-in"
+                        >
+                            <h1>
+                                Build Your Landing Page With
+                                <span>Easy Book</span>
+                            </h1>
+                            <p>
+                                We are team of talented designers making websites
+                                with Bootstrap
+                            </p>
+                            <div class="d-flex">
+                                <a href="#about" class="btn-get-started"
+                                >Get Started</a
+                                >
+                                <a
+                                        href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
+                                        class="glightbox btn-watch-video d-flex align-items-center"
+                                ><i class="bi bi-play-circle"></i
+                                ><span>Watch Video</span></a
+                                >
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-             <div v-if="forgetPwd" class="w-[480px] h-[300px] bg-[#030303] bg-opacity-70 mx-auto rounded-[30px] shadow-sm px-[70px] py-[30px]">
-                <div class="text-[21px] text-white font-normal">Forgot Password</div>
-                <div class="text-[12px] text-white font-normal">Please enter your email to get password reset link</div>
-                <div class="w-full mt-6">
-                    <input type="email" v-model="email" class="w-full rounded-lg h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" placeholder="Your email">
-                    <span v-if="errors && errors.email" class="text-xs text-red-600">{{ errors.email[0]}}</span>
 
-                    <button @click="forgetPassword" class="w-full mt-8 bg-black text-white border-2 border-[#383838] h-12 rounded-xl text-[17px] font-medium">Send Reset link</button>
-                    <div @click="logIn = true; forgetPwd = false; " class="text-[12px] underline cursor-pointer mt-1 text-center text-white font-normal">Back to login</div>
+                <svg
+                        class="hero-waves"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 24 150 28 "
+                        preserveAspectRatio="none"
+                >
+                    <defs>
+                        <path
+                                id="wave-path"
+                                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                        ></path>
+                    </defs>
+                    <g class="wave1">
+                        <use xlink:href="#wave-path" x="50" y="3"></use>
+                    </g>
+                    <g class="wave2">
+                        <use xlink:href="#wave-path" x="50" y="0"></use>
+                    </g>
+                    <g class="wave3">
+                        <use xlink:href="#wave-path" x="50" y="9"></use>
+                    </g>
+                </svg>
+            </section>
+            <!-- /Hero Section -->
 
+            <!-- About Section -->
+            <section id="about" class="about section">
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row align-items-xl-center gy-5">
+                        <div class="col-xl-5 content">
+                            <h3>About Us</h3>
+                            <h2>Ducimus rerum libero reprehenderit cumque</h2>
+                            <p>
+                                Ipsa sint sit. Quis ducimus tempore dolores impedit
+                                et dolor cumque alias maxime. Enim reiciendis minus
+                                et rerum hic non. Dicta quas cum quia maiores iure.
+                                Quidem nulla qui assumenda incidunt voluptatem
+                                tempora deleniti soluta.
+                            </p>
+                            <a href="#" class="read-more"
+                            ><span>Read More</span
+                            ><i class="bi bi-arrow-right"></i
+                            ></a>
+                        </div>
+
+                        <div class="col-xl-7">
+                            <div class="row gy-4 icon-boxes">
+                                <div
+                                        class="col-md-6"
+                                        data-aos="fade-up"
+                                        data-aos-delay="200"
+                                >
+                                    <div class="icon-box">
+                                        <i class="bi bi-buildings"></i>
+                                        <h3>Eius provident</h3>
+                                        <p>
+                                            Magni repellendus vel ullam hic officia
+                                            accusantium ipsa dolor omnis dolor
+                                            voluptatem
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- End Icon Box -->
+
+                                <div
+                                        class="col-md-6"
+                                        data-aos="fade-up"
+                                        data-aos-delay="300"
+                                >
+                                    <div class="icon-box">
+                                        <i class="bi bi-clipboard-pulse"></i>
+                                        <h3>Rerum aperiam</h3>
+                                        <p>
+                                            Autem saepe animi et aut aspernatur
+                                            culpa facere. Rerum saepe rerum
+                                            voluptates quia
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- End Icon Box -->
+
+                                <div
+                                        class="col-md-6"
+                                        data-aos="fade-up"
+                                        data-aos-delay="400"
+                                >
+                                    <div class="icon-box">
+                                        <i class="bi bi-command"></i>
+                                        <h3>Veniam omnis</h3>
+                                        <p>
+                                            Omnis perferendis molestias culpa sed.
+                                            Recusandae quas possimus. Quod
+                                            consequatur corrupti
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- End Icon Box -->
+
+                                <div
+                                        class="col-md-6"
+                                        data-aos="fade-up"
+                                        data-aos-delay="500"
+                                >
+                                    <div class="icon-box">
+                                        <i class="bi bi-graph-up-arrow"></i>
+                                        <h3>Delares sapiente</h3>
+                                        <p>
+                                            Sint et dolor voluptas minus possimus
+                                            nostrum. Reiciendis commodi eligendi
+                                            omnis quideme lorenda
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- End Icon Box -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-             <div v-if="resetPwd" class="w-[480px] h-auto bg-[#030303] bg-opacity-70 mx-auto rounded-[30px] shadow-sm px-[70px] py-[30px]">
-                <div class="text-[21px] text-white font-normal">Forgot Password</div>
-                <div class="text-[12px] text-white font-normal">Please enter password to reset password.</div>
-                <div class="w-full mt-6">
-                    <input type="hidden" v-model="user_token" >
-                    <input type="email" v-model="email" class="w-full mt-2 rounded-lg h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" placeholder="Your email">
-                    <span v-if="errors && errors.email" class="text-xs text-red-600">{{ errors.email[0]}}</span>
+            </section>
+            <!-- /About Section -->
 
-                    <div class="text-[12px] text-white  mt-2  font-normal">Enter OTP if reset mail not received! </div>
+            <!-- Features Section -->
+            <section id="features" class="features section">
+                <div class="container">
+                    <div class="row gy-4">
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                        >
+                            <div class="features-item">
+                                <i class="bi bi-eye" style="color: #ffbb2c"></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Lorem Ipsum</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
 
-                    <input type="text" v-model="otp" maxlength="15" class="w-full  mt-2 rounded-lg h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" placeholder="OTP">
-                    <span v-if="errors && errors.otp" class="text-xs text-red-600">{{ errors.otp[0]}}</span>
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-infinity"
+                                        style="color: #5578ff"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Dolor Sitema</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
 
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="300"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-mortarboard"
+                                        style="color: #e80368"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Sed perspiciatis</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
 
-                    <input type="password"  maxlength="10" v-model="password" class="w-full rounded-lg  mt-2 h-14 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" placeholder="New Password">
-                    <span v-if="errors && errors.password" class="text-xs text-red-600">{{ errors.password[0]}}</span>
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="400"
+                        >
+                            <div class="features-item">
+                                <i class="bi bi-nut" style="color: #e361ff"></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Magni Dolores</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
 
-                    <input type="password" maxlength="10"  v-model="confirm_password" class="w-full rounded-lg h-14  mt-2 bg-white border border-[#535353] focus:outline-none text-sm font-normal text-black placeholder-[#808080]" placeholder="Confirm Password">
-                    <span v-if="errors && errors.confirm_password" class="text-xs text-red-600">{{ errors.confirm_password[0]}}</span>
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="500"
+                        >
+                            <div class="features-item">
+                                <i class="bi bi-shuffle" style="color: #47aeff"></i>
+                                <h3>
+                                    <a href="" class="stretched-link">Nemo Enim</a>
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
 
-                    <button @click="resetPassword" class="w-full mt-8 mt-2  bg-black text-white border-2 border-[#383838] h-12 rounded-xl text-[17px] font-medium">Reset Password</button>
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="600"
+                        >
+                            <div class="features-item">
+                                <i class="bi bi-star" style="color: #ffa76e"></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Eiusmod Tempor</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="700"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-x-diamond"
+                                        style="color: #11dbcf"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Midela Teren</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="800"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-camera-video"
+                                        style="color: #4233ff"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link">Pira Neve</a>
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="900"
+                        >
+                            <div class="features-item">
+                                <i class="bi bi-command" style="color: #b2904f"></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Dirada Pack</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="1000"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-dribbble"
+                                        style="color: #b20969"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Moton Ideal</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="1100"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-activity"
+                                        style="color: #ff5828"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link">Verdo Park</a>
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+
+                        <div
+                                class="col-lg-3 col-md-4"
+                                data-aos="fade-up"
+                                data-aos-delay="1200"
+                        >
+                            <div class="features-item">
+                                <i
+                                        class="bi bi-brightness-high"
+                                        style="color: #29cc61"
+                                ></i>
+                                <h3>
+                                    <a href="" class="stretched-link"
+                                    >Flavor Nivelanda</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Feature Item -->
+                    </div>
                 </div>
-            </div>
+            </section>
+            <!-- /Features Section -->
+
+            <!-- Stats Section -->
+            <section id="stats" class="stats section light-background">
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row gy-4">
+                        <div
+                                class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+                        >
+                            <i class="bi bi-emoji-smile"></i>
+                            <div class="stats-item">
+                                <vue3-autocounter ref='counter' :startAmount='0' :endAmount='450'
+                                                  :duration='1'
+                                                  @finished='' />
+                                <p>Happy Clients</p>
+                            </div>
+                        </div>
+                        <!-- End Stats Item -->
+
+                        <div
+                                class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+                        >
+                            <i class="bi bi-journal-richtext"></i>
+                            <div class="stats-item">
+                                <vue3-autocounter ref='counter' :startAmount='0' :endAmount='550'
+                                                  :duration='2'
+                                                  @finished='' />
+                                <p>Projects</p>
+                            </div>
+                        </div>
+                        <!-- End Stats Item -->
+
+                        <div
+                                class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+                        >
+                            <i class="bi bi-headset"></i>
+                            <div class="stats-item">
+                                <vue3-autocounter ref='counter' :startAmount='0' :endAmount='1450'
+                                                  :duration='3'
+                                                  @finished='' />
+                                <p>Hours Of Support</p>
+                            </div>
+                        </div>
+                        <!-- End Stats Item -->
+
+                        <div
+                                class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+                        >
+                            <i class="bi bi-people"></i>
+                            <div class="stats-item">
+                                <vue3-autocounter ref='counter' :startAmount='0' :endAmount='50'
+                                                  :duration='3'
+                                                  @finished='' />
+                                <p>Hard Workers</p>
+                            </div>
+                        </div>
+                        <!-- End Stats Item -->
+                    </div>
+                </div>
+            </section>
+            <!-- /Stats Section -->
+
+            <!-- Details Section -->
+            <section id="details" class="details section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Details</h2>
+                    <div>
+                        <span>Check Our</span>
+                        <span class="description-title">Details</span>
+                    </div>
+                </div>
+                <!-- End Section Title -->
+
+                <div class="container">
+                    <div class="row gy-4 align-items-center features-item">
+                        <div
+                                class="col-md-5 d-flex align-items-center"
+                                data-aos="zoom-out"
+                                data-aos-delay="100"
+                        >
+                            <img
+                                    src="assets/img/details-1.png"
+                                    class="img-fluid"
+                                    alt=""
+                            />
+                        </div>
+                        <div
+                                class="col-md-7"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                        >
+                            <h3>
+                                Voluptatem dignissimos provident quasi corporis
+                                voluptates sit assumenda.
+                            </h3>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore magna aliqua.
+                            </p>
+                            <ul>
+                                <li>
+                                    <i class="bi bi-check"></i
+                                    ><span>
+                                    Ullamco laboris nisi ut aliquip ex ea
+                                    commodo consequat.</span
+                                >
+                                </li>
+                                <li>
+                                    <i class="bi bi-check"></i>
+                                    <span
+                                    >Duis aute irure dolor in reprehenderit in
+                                    voluptate velit.</span
+                                    >
+                                </li>
+                                <li>
+                                    <i class="bi bi-check"></i>
+                                    <span
+                                    >Ullam est qui quos consequatur eos
+                                    accusamus.</span
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Features Item -->
+
+                    <div class="row gy-4 align-items-center features-item">
+                        <div
+                                class="col-md-5 order-1 order-md-2 d-flex align-items-center"
+                                data-aos="zoom-out"
+                                data-aos-delay="200"
+                        >
+                            <img
+                                    src="assets/img/details-2.png"
+                                    class="img-fluid"
+                                    alt=""
+                            />
+                        </div>
+                        <div
+                                class="col-md-7 order-2 order-md-1"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                        >
+                            <h3>Corporis temporibus maiores provident</h3>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore magna aliqua.
+                            </p>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in
+                                voluptate velit esse cillum dolore eu fugiat nulla
+                                pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in culpa qui officia deserunt mollit
+                                anim id est laborum
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Features Item -->
+
+                    <div class="row gy-4 align-items-center features-item">
+                        <div
+                                class="col-md-5 d-flex align-items-center"
+                                data-aos="zoom-out"
+                        >
+                            <img
+                                    src="assets/img/details-3.png"
+                                    class="img-fluid"
+                                    alt=""
+                            />
+                        </div>
+                        <div class="col-md-7" data-aos="fade-up">
+                            <h3>
+                                Sunt consequatur ad ut est nulla consectetur
+                                reiciendis animi voluptas
+                            </h3>
+                            <p>
+                                Cupiditate placeat cupiditate placeat est ipsam
+                                culpa. Delectus quia minima quod. Sunt saepe odit
+                                aut quia voluptatem hic voluptas dolor doloremque.
+                            </p>
+                            <ul>
+                                <li>
+                                    <i class="bi bi-check"></i>
+                                    <span
+                                    >Ullamco laboris nisi ut aliquip ex ea
+                                    commodo consequat.</span
+                                    >
+                                </li>
+                                <li>
+                                    <i class="bi bi-check"></i
+                                    ><span>
+                                    Duis aute irure dolor in reprehenderit in
+                                    voluptate velit.</span
+                                >
+                                </li>
+                                <li>
+                                    <i class="bi bi-check"></i>
+                                    <span
+                                    >Facilis ut et voluptatem aperiam. Autem
+                                    soluta ad fugiat</span
+                                    >.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Features Item -->
+
+                    <div class="row gy-4 align-items-center features-item">
+                        <div
+                                class="col-md-5 order-1 order-md-2 d-flex align-items-center"
+                                data-aos="zoom-out"
+                        >
+                            <img
+                                    src="assets/img/details-4.png"
+                                    class="img-fluid"
+                                    alt=""
+                            />
+                        </div>
+                        <div class="col-md-7 order-2 order-md-1" data-aos="fade-up">
+                            <h3>
+                                Quas et necessitatibus eaque impedit ipsum animi
+                                consequatur incidunt in
+                            </h3>
+                            <p class="fst-italic">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore magna aliqua.
+                            </p>
+                            <p>
+                                Ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in
+                                voluptate velit esse cillum dolore eu fugiat nulla
+                                pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in culpa qui officia deserunt mollit
+                                anim id est laborum
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Features Item -->
+                </div>
+            </section>
+            <!-- /Details Section -->
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="gallery section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Gallery</h2>
+                    <div>
+                        <span>Check Our</span>
+                        <span class="description-title">Gallery</span>
+                    </div>
+                </div>
+                <!-- End Section Title -->
+
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row g-0">
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-1.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-1.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-2.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-2.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-3.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-3.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-4.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-4.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-5.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-5.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-6.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-6.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-7.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-7.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item">
+                                <a
+                                        href="assets/img/gallery/gallery-8.jpg"
+                                        class="glightbox"
+                                        data-gallery="images-gallery"
+                                >
+                                    <img
+                                            src="assets/img/gallery/gallery-8.jpg"
+                                            alt=""
+                                            class="img-fluid"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Gallery Item -->
+                    </div>
+                </div>
+            </section>
+            <!-- /Gallery Section -->
+
+
+            <!-- Testimonials Section -->
+            <section id="testimonials" class="testimonials section dark-background">
+
+                <img src="/assets/img/testimonials-bg.jpg" class="testimonials-bg" alt="">
+
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                    <swiper
+                            :modules="modules"
+                            :slides-per-view="3"
+                            :space-between="50"
+                            navigation
+                            :pagination="{ clickable: true }"
+                            :scrollbar="{ draggable: true }"
+                            @swiper="onSwiper"
+                            @slideChange="onSlideChange"
+                    >
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                                    <h3>Saul Goodman</h3>
+                                    <h4>Ceo &amp; Founder</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div><!-- End testimonial item -->
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                                    <h3>Sara Wilsson</h3>
+                                    <h4>Designer</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div><!-- End testimonial item -->
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                                    <h3>Jena Karlis</h3>
+                                    <h4>Store Owner</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                                    <h3>Matt Brandon</h3>
+                                    <h4>Freelancer</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                                    <h3>John Larson</h3>
+                                    <h4>Entrepreneur</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                                    <h3>John Larson</h3>
+                                    <h4>Entrepreneur</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    </swiper>
+                </div>
+
+            </section>
+            <!-- /Testimonials Section -->
+
+            <!-- Team Section -->
+            <section id="team" class="team section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Team</h2>
+                    <div>
+                        <span>Check Our</span>
+                        <span class="description-title">Team</span>
+                    </div>
+                </div>
+                <!-- End Section Title -->
+
+                <div class="container">
+                    <div class="row gy-5">
+                        <div
+                                class="col-lg-4 col-md-6"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                        >
+                            <div class="member">
+                                <div class="pic">
+                                    <img
+                                            src="assets/img/team/team-1.jpg"
+                                            class="img-fluid"
+                                            alt=""
+                                    />
+                                </div>
+                                <div class="member-info">
+                                    <h4>Walter White</h4>
+                                    <span>Chief Executive Officer</span>
+                                    <div class="social">
+                                        <a href=""
+                                        ><i class="bi bi-twitter-x"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-facebook"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-instagram"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-linkedin"></i
+                                        ></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Team Member -->
+
+                        <div
+                                class="col-lg-4 col-md-6"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                        >
+                            <div class="member">
+                                <div class="pic">
+                                    <img
+                                            src="assets/img/team/team-2.jpg"
+                                            class="img-fluid"
+                                            alt=""
+                                    />
+                                </div>
+                                <div class="member-info">
+                                    <h4>Sarah Jhonson</h4>
+                                    <span>Product Manager</span>
+                                    <div class="social">
+                                        <a href=""
+                                        ><i class="bi bi-twitter-x"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-facebook"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-instagram"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-linkedin"></i
+                                        ></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Team Member -->
+
+                        <div
+                                class="col-lg-4 col-md-6"
+                                data-aos="fade-up"
+                                data-aos-delay="300"
+                        >
+                            <div class="member">
+                                <div class="pic">
+                                    <img
+                                            src="assets/img/team/team-3.jpg"
+                                            class="img-fluid"
+                                            alt=""
+                                    />
+                                </div>
+                                <div class="member-info">
+                                    <h4>William Anderson</h4>
+                                    <span>CTO</span>
+                                    <div class="social">
+                                        <a href=""
+                                        ><i class="bi bi-twitter-x"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-facebook"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-instagram"></i
+                                        ></a>
+                                        <a href=""
+                                        ><i class="bi bi-linkedin"></i
+                                        ></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Team Member -->
+                    </div>
+                </div>
+            </section>
+            <!-- /Team Section -->
+
+            <!-- Pricing Section -->
+            <section id="pricing" class="pricing section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Pricing</h2>
+                    <div>
+                        <span>Check Our</span>
+                        <span class="description-title">Pricing</span>
+                    </div>
+                </div>
+                <!-- End Section Title -->
+
+                <div class="container">
+                    <div class="row gy-4">
+                        <div
+                                class="col-lg-4"
+                                data-aos="zoom-in"
+                                data-aos-delay="100"
+                        >
+                            <div class="pricing-item">
+                                <h3>Free Plan</h3>
+                                <p class="description">
+                                    Ullam mollitia quasi nobis soluta in voluptatum
+                                    et sint palora dex strater
+                                </p>
+                                <h4><sup>$</sup>0<span> / month</span></h4>
+                                <a href="#" class="cta-btn">Start a free trial</a>
+                                <p class="text-center small">
+                                    No credit card required
+                                </p>
+                                <ul>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Quam adipiscing vitae proin</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nec feugiat nisl pretium</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nulla at volutpat diam uteera</span>
+                                    </li>
+                                    <li class="na">
+                                        <i class="bi bi-x"></i>
+                                        <span>Pharetra massa massa ultricies</span>
+                                    </li>
+                                    <li class="na">
+                                        <i class="bi bi-x"></i>
+                                        <span
+                                        >Massa ultricies mi quis hendrerit</span
+                                        >
+                                    </li>
+                                    <li class="na">
+                                        <i class="bi bi-x"></i>
+                                        <span
+                                        >Voluptate id voluptas qui sed aperiam
+                                        rerum</span
+                                        >
+                                    </li>
+                                    <li class="na">
+                                        <i class="bi bi-x"></i>
+                                        <span
+                                        >Iure nihil dolores recusandae odit
+                                        voluptatibus</span
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Pricing Item -->
+
+                        <div
+                                class="col-lg-4"
+                                data-aos="zoom-in"
+                                data-aos-delay="200"
+                        >
+                            <div class="pricing-item featured">
+                                <p class="popular">Popular</p>
+                                <h3>Business Plan</h3>
+                                <p class="description">
+                                    Ullam mollitia quasi nobis soluta in voluptatum
+                                    et sint palora dex strater
+                                </p>
+                                <h4><sup>$</sup>29<span> / month</span></h4>
+                                <a href="#" class="cta-btn">Start a free trial</a>
+                                <p class="text-center small">
+                                    No credit card required
+                                </p>
+                                <ul>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Quam adipiscing vitae proin</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nec feugiat nisl pretium</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nulla at volutpat diam uteera</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Pharetra massa massa ultricies</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span
+                                        >Massa ultricies mi quis hendrerit</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span
+                                        >Voluptate id voluptas qui sed aperiam
+                                        rerum</span
+                                        >
+                                    </li>
+                                    <li class="na">
+                                        <i class="bi bi-x"></i>
+                                        <span
+                                        >Iure nihil dolores recusandae odit
+                                        voluptatibus</span
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Pricing Item -->
+
+                        <div
+                                class="col-lg-4"
+                                data-aos="zoom-in"
+                                data-aos-delay="300"
+                        >
+                            <div class="pricing-item">
+                                <h3>Developer Plan</h3>
+                                <p class="description">
+                                    Ullam mollitia quasi nobis soluta in voluptatum
+                                    et sint palora dex strater
+                                </p>
+                                <h4><sup>$</sup>49<span> / month</span></h4>
+                                <a href="#" class="cta-btn">Start a free trial</a>
+                                <p class="text-center small">
+                                    No credit card required
+                                </p>
+                                <ul>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Quam adipiscing vitae proin</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nec feugiat nisl pretium</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Nulla at volutpat diam uteera</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span>Pharetra massa massa ultricies</span>
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span
+                                        >Massa ultricies mi quis hendrerit</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span
+                                        >Voluptate id voluptas qui sed aperiam
+                                        rerum</span
+                                        >
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check"></i>
+                                        <span
+                                        >Iure nihil dolores recusandae odit
+                                        voluptatibus</span
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Pricing Item -->
+                    </div>
+                </div>
+            </section>
+            <!-- /Pricing Section -->
+
+            <!-- Faq Section -->
+            <section id="faq" class="faq section light-background">
+                <div class="container-fluid">
+                    <div class="row gy-4">
+                        <div
+                                class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1"
+                        >
+                            <div
+                                    class="content px-xl-5"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                            >
+                                <h3>
+                                <span>Frequently Asked </span
+                                ><strong>Questions</strong>
+                                </h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                    Duis aute irure dolor in reprehenderit
+                                </p>
+                            </div>
+
+                            <div
+                                    class="faq-container px-xl-5"
+                                    data-aos="fade-up"
+                                    data-aos-delay="200"
+                            >
+                                <div class="faq-item faq-active">
+                                    <i class="faq-icon bi bi-question-circle"></i>
+                                    <h3>
+                                        Non consectetur a erat nam at lectus urna
+                                        duis?
+                                    </h3>
+                                    <div class="faq-content">
+                                        <p>
+                                            Feugiat pretium nibh ipsum consequat.
+                                            Tempus iaculis urna id volutpat lacus
+                                            laoreet non curabitur gravida. Venenatis
+                                            lectus magna fringilla urna porttitor
+                                            rhoncus dolor purus non.
+                                        </p>
+                                    </div>
+                                    <i class="faq-toggle bi bi-chevron-right"></i>
+                                </div>
+                                <!-- End Faq item-->
+
+                                <div class="faq-item">
+                                    <i class="faq-icon bi bi-question-circle"></i>
+                                    <h3>
+                                        Feugiat scelerisque varius morbi enim nunc
+                                        faucibus a pellentesque?
+                                    </h3>
+                                    <div class="faq-content">
+                                        <p>
+                                            Dolor sit amet consectetur adipiscing
+                                            elit pellentesque habitant morbi. Id
+                                            interdum velit laoreet id donec
+                                            ultrices. Fringilla phasellus faucibus
+                                            scelerisque eleifend donec pretium. Est
+                                            pellentesque elit ullamcorper dignissim.
+                                            Mauris ultrices eros in cursus turpis
+                                            massa tincidunt dui.
+                                        </p>
+                                    </div>
+                                    <i class="faq-toggle bi bi-chevron-right"></i>
+                                </div>
+                                <!-- End Faq item-->
+
+                                <div class="faq-item">
+                                    <i class="faq-icon bi bi-question-circle"></i>
+                                    <h3>
+                                        Dolor sit amet consectetur adipiscing elit
+                                        pellentesque?
+                                    </h3>
+                                    <div class="faq-content">
+                                        <p>
+                                            Eleifend mi in nulla posuere
+                                            sollicitudin aliquam ultrices sagittis
+                                            orci. Faucibus pulvinar elementum
+                                            integer enim. Sem nulla pharetra diam
+                                            sit amet nisl suscipit. Rutrum tellus
+                                            pellentesque eu tincidunt. Lectus urna
+                                            duis convallis convallis tellus. Urna
+                                            molestie at elementum eu facilisis sed
+                                            odio morbi quis
+                                        </p>
+                                    </div>
+                                    <i class="faq-toggle bi bi-chevron-right"></i>
+                                </div>
+                                <!-- End Faq item-->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 order-1 order-lg-2">
+                            <img
+                                    src="assets/img/faq.jpg"
+                                    class="img-fluid"
+                                    alt=""
+                                    data-aos="zoom-in"
+                                    data-aos-delay="100"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- /Faq Section -->
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Contact</h2>
+                    <div>
+                        <span>Check Our</span>
+                        <span class="description-title">Contact</span>
+                    </div>
+                </div>
+                <!-- End Section Title -->
+
+                <div class="container" data-aos="fade" data-aos-delay="100">
+                    <div class="row gy-4">
+                        <div class="col-lg-4">
+                            <div
+                                    class="info-item d-flex"
+                                    data-aos="fade-up"
+                                    data-aos-delay="200"
+                            >
+                                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                                <div>
+                                    <h3>Address</h3>
+                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                </div>
+                            </div>
+                            <!-- End Info Item -->
+
+                            <div
+                                    class="info-item d-flex"
+                                    data-aos="fade-up"
+                                    data-aos-delay="300"
+                            >
+                                <i class="bi bi-telephone flex-shrink-0"></i>
+                                <div>
+                                    <h3>Call Us</h3>
+                                    <p>+1 5589 55488 55</p>
+                                </div>
+                            </div>
+                            <!-- End Info Item -->
+
+                            <div
+                                    class="info-item d-flex"
+                                    data-aos="fade-up"
+                                    data-aos-delay="400"
+                            >
+                                <i class="bi bi-envelope flex-shrink-0"></i>
+                                <div>
+                                    <h3>Email Us</h3>
+                                    <p>info@example.com</p>
+                                </div>
+                            </div>
+                            <!-- End Info Item -->
+                        </div>
+
+                        <div class="col-lg-8">
+                            <form
+                                    action="forms/contact.php"
+                                    method="post"
+                                    class="php-email-form"
+                                    data-aos="fade-up"
+                                    data-aos-delay="200"
+                            >
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input
+                                                type="text"
+                                                name="name"
+                                                class="form-control"
+                                                placeholder="Your Name"
+                                                required=""
+                                        />
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input
+                                                type="email"
+                                                class="form-control"
+                                                name="email"
+                                                placeholder="Your Email"
+                                                required=""
+                                        />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                name="subject"
+                                                placeholder="Subject"
+                                                required=""
+                                        />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                    <textarea
+                                            class="form-control"
+                                            name="message"
+                                            rows="6"
+                                            placeholder="Message"
+                                            required=""
+                                    ></textarea>
+                                    </div>
+
+                                    <div class="col-md-12 text-center">
+                                        <div class="loading">Loading</div>
+                                        <div class="error-message"></div>
+                                        <div class="sent-message">
+                                            Your message has been sent. Thank you!
+                                        </div>
+
+                                        <button type="submit">Send Message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- End Contact Form -->
+                    </div>
+                </div>
+            </section>
+            <!-- /Contact Section -->
         </div>
+    </WebLayout>
 
-        <p class="px-2 py-2 mt-[10px] text-black text-xs flex items-center justify-center font-bold">
-            <a title="Portfolio"  href="https://my-react-portfoliy.netlify.app/#portfolio" class="px-1 "  target="_blank" > Developed By <span class="text-red-600">Pankaj Kumar</span></a>
-            <a title="Github Profile" href="https://github.com/pankajToday"  target="_blank" class="px-1">
-                <svg width="16px" height="16px" viewBox="0 -0.5 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Github-color</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Color-" transform="translate(-700.000000, -560.000000)" fill="#ee3c2f"> <path d="M723.9985,560 C710.746,560 700,570.787092 700,584.096644 C700,594.740671 706.876,603.77183 716.4145,606.958412 C717.6145,607.179786 718.0525,606.435849 718.0525,605.797328 C718.0525,605.225068 718.0315,603.710086 718.0195,601.699648 C711.343,603.155898 709.9345,598.469394 709.9345,598.469394 C708.844,595.686405 707.2705,594.94548 707.2705,594.94548 C705.091,593.450075 707.4355,593.480194 707.4355,593.480194 C709.843,593.650366 711.1105,595.963499 711.1105,595.963499 C713.2525,599.645538 716.728,598.58234 718.096,597.964902 C718.3135,596.407754 718.9345,595.346062 719.62,594.743683 C714.2905,594.135281 708.688,592.069123 708.688,582.836167 C708.688,580.205279 709.6225,578.054788 711.1585,576.369634 C710.911,575.759726 710.0875,573.311058 711.3925,569.993458 C711.3925,569.993458 713.4085,569.345902 717.9925,572.46321 C719.908,571.928599 721.96,571.662047 724.0015,571.651505 C726.04,571.662047 728.0935,571.928599 730.0105,572.46321 C734.5915,569.345902 736.603,569.993458 736.603,569.993458 C737.9125,573.311058 737.089,575.759726 736.8415,576.369634 C738.3805,578.054788 739.309,580.205279 739.309,582.836167 C739.309,592.091712 733.6975,594.129257 728.3515,594.725612 C729.2125,595.469549 729.9805,596.939353 729.9805,599.18773 C729.9805,602.408949 729.9505,605.006706 729.9505,605.797328 C729.9505,606.441873 730.3825,607.191834 731.6005,606.9554 C741.13,603.762794 748,594.737659 748,584.096644 C748,570.787092 737.254,560 723.9985,560" id="Github"> </path> </g> </g> </g>
-                </svg>
-            </a>
-            <a title="Medium Post" href="https://ankuprsdpkp.medium.com" target="_blank" class="px-1">
-                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2C3.79086 2 2 3.79086 2 6V18C2 20.2091 3.79086 22 6 22H18C20.2091 22 22 20.2091 22 18V6C22 3.79086 20.2091 2 18 2H6ZM4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6ZM7 7C6.44772 7 6 7.44772 6 8C6 8.55228 6.44772 9 7 9V15C6.44772 15 6 15.4477 6 16C6 16.5523 6.44772 17 7 17H8H9C9.55228 17 10 16.5523 10 16C10 15.4477 9.55228 15 9 15V11.3028L11.1679 14.5547C11.3534 14.8329 11.6656 15 12 15C12.3344 15 12.6466 14.8329 12.8321 14.5547L15 11.3028V15C14.4477 15 14 15.4477 14 16C14 16.5523 14.4477 17 15 17H16H17C17.5523 17 18 16.5523 18 16C18 15.4477 17.5523 15 17 15V9C17.5523 9 18 8.55228 18 8C18 7.44772 17.5523 7 17 7H16C15.6656 7 15.3534 7.1671 15.1679 7.4453L12 12.1972L8.83205 7.4453C8.64658 7.1671 8.33435 7 8 7H7Z" fill="#f64b2c"></path> </g>
-                </svg>
-            </a>
-        </p>
 
-    </div>
 </template>
 
 <script>
-    import { toast } from 'vue3-toastify';
-    import 'vue3-toastify/dist/index.css';
 
-    import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head } from "@inertiajs/inertia-vue3";
+import WebLayout from "./WebLayout/AppLayout.vue";
+import Vue3Autocounter from 'vue3-autocounter';
+// import Swiper core and required modules
+import { Navigation, Pagination, A11y } from 'swiper/modules';
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 
 export default {
-    name: "Welcome",
-    components:{Head},
-    data(){
-        return{
-            errors:"",
-            user_token:"",
-            resetPwd:false,
-            forgetPwd: false,
-            logIn: true,
-            username:"user",
-            password:"password",
-            email:"user@example.com",
-            remember:"1",
-            confirm_password:"password"
-        }
+    name: "MasterLayout",
+    components: { Head ,WebLayout,Vue3Autocounter,Swiper, SwiperSlide},
+    data() {
+        return {
+
+        };
     },
-    methods:{
-        Login(){
-            var loginData ={
-                email: this.email ,
-                password: this.password,
-                remember :this.remember,
-            };
-
-            var url = '/api/login';
-            axios.post( url ,loginData ).then(response => {
-                if( response.status === 200 &&  response.data.status === 'success' ){
-                    toast.success('Login Success');
-                    this.$inertia.get('/dashboard');
-                }
-                else
-                {
-                    toast.error('Login failed!');
-                }
-            }).catch((error) => {
-                if( error.response.status == 422 ){
-                    this.errors = error.response.data.errors;
-                }
-
-                toast.error('Something went wrong!');
-                console.log("Error",error);
-            });
-        },
-        forgetPassword(){
-            var loginData ={
-                email: this.email ,
-            };
-
-            var url = route('forgetPassword');
-            axios.post( url ,loginData ).then(response => {
-                this.forgetPwd = false ;
-                this.resetPwd =true ;
-
-                this.password = '';
-                this.confirm_password ='';
-
-                toast( response.data.message );
-
-            }).catch((error) => {
-                if( error.response.status == 422 ){
-                    this.errors = error.response.data.errors;
-                }
-                console.log("Error",error);
-                toast( 'Something went wrong!' );
-            });
-        },
-        resetPassword(){
-            var loginData ={
-                email: this.email ,
-                otp:this.otp ,
-                password:this.password,
-                password_confirmation: this.confirm_password,
-                token: this.token
-            };
-
-            var url = route('resetPassword');
-            axios.post( url ,loginData ).then(response => {
-                if( response.data.status == 200 )
-                {
-                    this.resetPwd =false;
-                    this.forgetPwd= false;
-                    this.logIn= true;
-                }
-
-                toast( response.data.message );
-
-
-            }).catch((error) => {
-                if( error.response.status == 422 ){
-                    this.errors = error.response.data.errors;
-                }
-                console.log("Error",error);
-                toast( 'Something went wrong!' );
-            });
-        },
-        reset(){
-            this.email ='';
-            this.username ='';
-            this.password = '';
-            this.confirm_password ='';
-        }
-    },
-    created(){
+    methods: {},
+    created() {
 
     },
-}
+    watch: {
+        /*'duration_visitor':{
+        handler: 'orderGraph'
+    },*/
+    },
+    onmount(){
+        console.log( "on mount done" );
+
+    },
+    setup() {
+        const onSwiper = (swiper) => {
+            console.log(swiper);
+        };
+        const onSlideChange = () => {
+            console.log('slide change');
+        };
+
+        return {
+            onSwiper,
+            onSlideChange,
+            modules: [Navigation, Pagination, A11y],
+        };
+    },
+};
 </script>
+
+<style scoped>
+
+</style>

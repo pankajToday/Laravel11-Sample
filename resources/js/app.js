@@ -8,7 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Vapor from 'laravel-vapor';
 import {VaporAssetsMixin} from "./Mixins/VaporAssetsMixin.js";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Ads Compare';
+const appName = import.meta.env.VITE_APP_NAME || 'Easy Book';
 
 Vapor.withBaseAssetUrl(import.meta.env.VITE_VAPOR_ASSET_URL)
 

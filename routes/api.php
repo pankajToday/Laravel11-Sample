@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +27,8 @@ Route::post("/reset-password" , [ LoginController::class ,'resetPassword']);
 
 # Api for Dashboard Users.......................
 Route::middleware('auth:sanctum')->group( function () {
+
+    Route::Resource("/categories",CategoryController::class);
+    Route::Resource("/products",ProductController::class);
 
 });
