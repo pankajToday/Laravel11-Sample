@@ -38,7 +38,7 @@ class ProductController extends Controller
                 })
                 ->when($selectedCategory, function($query) use($selectedCategory) {
                     // Add other special cases if needed
-                    return $query->whereHas('categories' , function ($q)use( $selectedCategory ){
+                    return $query->whereHas('category' , function ($q)use( $selectedCategory ){
                         $q->where( 'id' , $selectedCategory );
                     } );
                 })
@@ -87,7 +87,7 @@ class ProductController extends Controller
      */
     public function show( Product $product  )
     {
-        return new  ProductResource( $product->load('categories')  );
+        return new  ProductResource( $product->load('category')  );
     }
 
     /**

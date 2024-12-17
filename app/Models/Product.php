@@ -17,7 +17,7 @@ class Product extends Model
 
     protected $guarded =[];
 
-    public function  categories(){
+    public function  category(){
         return $this->belongsTo( Category::class,'category_id','id');
     }
 
@@ -25,7 +25,7 @@ class Product extends Model
         return $this->hasMany( ProductImage::class );
     }
 
-    function baseImages(){
+    function baseImage(){
         return $this->hasOne( ProductImage::class )->where('type' ,'primary');
     }
 

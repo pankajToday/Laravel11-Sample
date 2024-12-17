@@ -178,6 +178,13 @@
             url:"/products",
             icon:"",
             sub_menu:[],
+        },
+        {
+            name:"Inventory",
+            slug:"inventory",
+            url:"/inventory",
+            icon:"",
+            sub_menu:[],
         }
     ]);
 

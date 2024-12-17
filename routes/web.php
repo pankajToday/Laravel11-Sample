@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth' ], function () {
     Route::inertia('/profile', 'Dashboard/Profile');
     Route::inertia('/categories', 'Dashboard/Category/Lists');
     Route::inertia('/products', 'Dashboard/Product/Lists');
+    Route::inertia('/inventory', 'Dashboard/Inventory/Lists');
     Route::inertia('/dashboard-2', 'Dashboard/Dashboard');
 });
 

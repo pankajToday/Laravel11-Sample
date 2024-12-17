@@ -16,14 +16,14 @@
                         <div class="card-header d-flex justify-content-between">
                             <!--- give table header --->
                             <div class="d-flex justify-content-start">
-                                <input type="search" v-model="searchValue" class="form-control mx-2" placeholder="Search Product">
+                                <input type="search" v-model="searchValue" class="form-control mx-2" placeholder="Search Items">
                                 <select v-model="selectedCategory" id="categoryList" class="js-example-basic-single form-control mx-2" name="state">
                                     <option value="" selected>Select Category</option>
                                     <option :value="category.value"  v-for="category in categoryList">{{category.label}}</option>
                                 </select>
 
                             </div>
-                            <button @click="addProductModal = !addProductModal"  class="btn mb-2 btn-pill btn-primary"  >Add New</button>
+                            <button @click="addInventorytModal = !addInventorytModal"  class="btn mb-2 btn-pill btn-primary"  >Add New</button>
                         </div>
 
                         <EasyDataTable
@@ -31,7 +31,7 @@
                                 :items="items"
                                 :loading="loading"
                                 table-class-name="product-table"
-                                class="hide-pagination-table"
+                                :body-expand-row-class-name="bodyExpandRowClassNameFunction"
                                 :search-field="searchField"
                                 :search-value="searchValue"
                                 hide-footer="false"
@@ -40,33 +40,48 @@
                                 must-sort
                         >
 
-                            <template #item-name="{ name,id ,image}">
+                            <template #item-product_name="{ product_name,product_id ,product_img}">
                                 <div class="player-wrapper d-flex align-center">
                                     <div class="ms-2 text-decoration-none ">
-                                        <a  :href="route('products.show',id)" title="View Product" target="_blank"  class="flex mx-1 my-1 no-underline justify-start items-center text-indigo-500 font-bold">
-                                            <img :src="image" class="h-10 w-10 rounded-lg shadow-sm">
-                                            <span class="text-subtitle-1 mb-0  px-2">{{ name }}</span>
+                                        <a  :href="route('inventories.show',product_id)" title="View Product" target="_blank"  class="flex mx-1 my-1 no-underline justify-start items-center text-indigo-500 font-bold">
+                                            <img :src="product_img" class="h-10 w-10 rounded-lg shadow-sm">
+                                            <span class="text-subtitle-1 mb-0  px-2">{{ product_name }}</span>
 
                                         </a>
                                     </div>
                                 </div>
                             </template>
-                            <template #item-actions="item">
-                                <div class="operation-wrapper">
-                                    <div class="d-flex gap-2">
-                                        <a href="#" @click.prevent="editProduct(item)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit-2 align-middle">
-                                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                            </svg>
-                                        </a>
-                                        <a href="#" @click.prevent="deleteProduct(item.id)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash align-middle">
-                                                <path d="M3 6h18"></path>
-                                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
+                            <template #expand="item">
+                                <div style="padding: 15px">
+                                    <EasyDataTable
+                                        :headers="inventoryHeaders"
+                                        :items="item.inventory"
+                                        :loading="loading"
+                                        hide-footer="false"
+                                        table-class-name="inventory-table"
+                                        show-index
+                                        alternating
+                                        must-sort
+                                    >
+                                        <template #item-actions="item">
+                                            <div class="operation-wrapper">
+                                                <div class="d-flex gap-2">
+                                                    <a href="#" @click.prevent="editInventory(item)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit-2 align-middle">
+                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                                                        </svg>
+                                                    </a>
+                                                    <a href="#" @click.prevent="deleteInventory(item.id)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash align-middle">
+                                                            <path d="M3 6h18"></path>
+                                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </EasyDataTable>
                                 </div>
                             </template>
 
@@ -76,13 +91,13 @@
                 </div>
             </div>
 
-            <div v-if="addProductModal"  class="fixed inset-0 px-2 z-10 overflow-hidden flex items-center justify-center backdrop-blur-sm transition-opacity ">
+            <div v-if="addInventorytModal"  class="fixed inset-0 px-2 z-10 overflow-hidden flex items-center justify-center backdrop-blur-sm transition-opacity ">
                 <div  class="absolute inset-0 bg-gray-900 bg-opacity-75 transition-opacity"></div>
                 <!-- Modal Content -->
                 <div  class="w-full sm:w-96 md:w-1/2 lg:w-2/3 bg-white rounded-md shadow-xl overflow-hidden z-50">
                     <!-- Modal Header -->
                     <div class=" bg-gray-100 text-white px-2 py-3 flex justify-between">
-                        <span class="text-lg text-black">{{product.id ?'Edit':'Add'}} Product   </span>
+                        <span class="text-lg text-black">{{inventory.id ?'Edit':'Add'}} Product   </span>
                         <button @click="modalClose()"  type="button" class="btn-close my-1" ></button>
                     </div>
                     <!-- Modal Body -->
@@ -99,7 +114,7 @@
                                         <label class="col-form-label text-sm-right">Category <span class="text-red-500">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <select v-model="product.category_id" class="form-control" name="categoryLs">
+                                        <select v-model="product.inventory_id" class="form-control" name="inventoryLs">
                                             <option value="" selected>Select Category</option>
                                             <option :value="category.value"  v-for="category in categoryList">{{category.label}}</option>
                                         </select>
@@ -396,7 +411,7 @@
     import 'sweetalert2/src/sweetalert2.scss'
 
     //---------------  define  data ================
-    const  pageName = ref("Products");
+    const  pageName = ref("Inventory");
     const loading = ref(false)
     const selectedItems = ref([]);
     const serverItemsLength = ref(0);
@@ -407,16 +422,33 @@
         sortType: 'asc'
     });
 
+    const bodyExpandRowClassNameFunction = (item, rowNumber) => {
+        return 'can-expand';
+    };
+
+
     const headers = [
-        { text: "Name", value: "name", sortable: true , fixed: true,   width: 200,},
-        { text: "Category", value: "category_name", sortable: true , fixed: true,   width: 180,},
-        { text: "Sku", value: "sku", sortable: true,fixed: true, width: 160},
-        { text: "Type", value: "type", sortable: true,fixed: true, width: 60},
-        { text: "Quantity", value: "quantity", sortable: true,fixed: true, width: 90},
-        { text: "Pro. Status", value: "inventory_status", sortable: true,fixed: true, width: 90},
-        { text: "₹ MRP", value: "price", sortable: true,fixed: true, width: 90},
-        { text: "Status", value: "status", sortable: true,fixed: true, width: 70},
-        { text: "Action", value: "actions", fixed: true, width: 300, sortable: false,
+        { text: "Name", value: "product_name", sortable: true ,    width: 200,},
+        { text: "Category", value: "category_name", sortable: true ,    width: 180,},
+        { text: "Sku", value: "sku", sortable: true, width: 160},
+        { text: "Type", value: "product_type", sortable: true, width: 160},
+        { text: "Min Stock", value: "min_stock", sortable: true, width: 60},
+        { text: "Max Stock", value: "max_stock", sortable: true, width: 60},
+        { text: "Status", value: "status", sortable: true, width: 90},
+
+    ];
+    const inventoryHeaders = [
+        { text: "Buy Date", value: "purchase_date", sortable: true, width: 90},
+        { text: "Sku", value: "sku", sortable: true, width: 160},
+        { text: "Quantity", value: "quantity", sortable: true, width: 90},
+        { text: "₹ Base", value: "base_price", sortable: true, width: 90},
+        { text: "₹ MRP", value: "mrp_price", sortable: true, width: 90},
+        { text: "₹ Sale", value: "sale_price", sortable: true, width: 90},
+        { text: "Expiry", value: "expiry_date", sortable: true, width: 90},
+        { text: "QuCode", value: "qucode", sortable: true, width: 90},
+        { text: "BarCode", value: "barcode", sortable: true, width: 90},
+        { text: "Status", value: "status", sortable: true, width: 90},
+        { text: "Action", value: "actions",  width: 300, sortable: false,
             html: true// Enable HTML rendering for this column
         },
     ];
@@ -428,17 +460,7 @@
     const sortType = ref(["desc", "asc"]);
     const categoryList = ref([]);
     const itemsSelected = ref([]);
-    const product = ref({
-        id:"",
-        name:"",
-        type:"",
-        category_id:"",
-        category_name:"",
-        min_stock_hold:1,
-        max_stock_hold:100,
-        description:"",
-        status:"inactive" ,
-        inventory:{
+    const inventory = ref({
             product_id:"" ,
             quantity:1,
             status:"in-stock",
@@ -454,12 +476,11 @@
             code_type:'barcode',
             expiry:"",
             purchase_date:"",
-        }
-
-    });
+    }
+    );
     const discountTooltip = ref("Select product discount type and max allowed discount for sale.");
     const taxTooltip = ref("Select Tax Format and rate for good for sale.");
-    const addProductModal = ref(false);
+    const addInventorytModal = ref(false);
     const selectedCategory =ref("");
 
     // file upload....
@@ -472,34 +493,23 @@
 
     //--------------- define  function ================
     const modalClose = ()=>{
-        addProductModal.value =false;
-        product.value = {
-            id:"",
-            name:"",
-            type:"",
-            category_id:"",
-            category_name:"",
-            min_stock_hold:1,
-            max_stock_hold:100,
-            description:"",
-            status:"inactive" ,
-            inventory:{
-                product_id:"" ,
-                quantity:1,
-                status:"in-stock",
-                base_price:0,
-                mrp_price:0,
-                sale_price:0,
-                discount_id:'flat',
-                discount_amount:0,
-                tax_id:'gst',
-                tax_rate:0,
-                tax_amt:0,
-                code_number:0,
-                code_type:'barcode',
-                expiry:"",
-                purchase_date:""
-            }
+        addInventorytModal.value =false;
+        inventory.value = {
+            product_id:"" ,
+            quantity:1,
+            status:"in-stock",
+            base_price:0,
+            mrp_price:0,
+            sale_price:0,
+            discount_id:'flat',
+            discount_amount:0,
+            tax_id:'gst',
+            tax_rate:0,
+            tax_amt:0,
+            code_number:0,
+            code_type:'barcode',
+            expiry:"",
+            purchase_date:""
         }
         fileData.value ='';
         uploadProgress.value =0;
@@ -521,10 +531,10 @@
         }
     };
 
-    const fetchProducts = async (updateOptions) => {
+    const fetchInventory = async () => {
         loading.value = true;
         try {
-            const response = await axios.get(route('products.index'), {
+            const response = await axios.get(route('inventories.index'), {
                 params: {
                     page: serverOptions.value.page,
                     per_page: serverOptions.value.rowsPerPage,
@@ -538,20 +548,34 @@
             if (response.status === 200) {
                 // Map the response data to include transformed values
                 items.value = response.data.data.map( (item,i) => ({
-                    id: item.id, // Keep the id for actions
-                    name: item.name,
-                    category_id:item.category_id,
-                    category_name:item.category_name,
-                    type: item.type || 'N/A',
-                    sku:item.sku,
-                    quantity:item.quantity,
-                    inventory_status:item.inventory_status,
-                    price:'₹'+item.price.mrp_price,
-                    status: item.product_status === 1 ? 'Active' : 'Inactive',
-                    image:item.image??'/assets/img/dummy-product-5.jpg',
-                    min_stock_hold:item.min_stock_hold,
-                    max_stock_hold:item.max_stock_hold,
-                    description:item.description,
+                    category_id : item.category_id ,
+                    category_name : item.category_name ,
+                    product_id:item.product_id,
+                    product_name:item.product_name ,
+                    product_img:item.product_img,
+                    sku:item.product_sku,
+                    min_stock:item.min_stock_hold,
+                    max_stock:item.min_stock_hold,
+                    status:item.status,
+                    'inventory' : item.inventory.map( (inventory,s) => ({
+                        "id": inventory.id ,
+                        "sku" : inventory.sku ,
+                        "product_id" : inventory.product_id ,
+                        "quantity" : inventory.quantity ,
+                        "status" : inventory.status ,
+                        "base_price" : inventory.base_price ,
+                        "mrp_price" : inventory.mrp_price ,
+                        "sale_price" : inventory.sale_price ,
+                        "discount_id" : inventory.discount_id ,
+                        "discount_amt" : inventory.discount_amt ,
+                        "tax_type" : inventory.tax_type ,
+                        "tax_rate" : inventory.tax_rate ,
+                        "tax_amt" : inventory.tax_amt ,
+                        "barcode" : inventory.barcode ,
+                        "qucode" : inventory.qucode ,
+                        "expiry_date" : inventory.expiry_date ,
+                        "purchase_date" : inventory.purchase_date ,
+                    }))
 
                 }));
                 serverItemsLength.value = items.value.length;
@@ -564,15 +588,15 @@
     };
 
     // Add these methods to handle edit and delete actions
-    const editProduct = (data) => {
+    const editInventory = (data) => {
         // Handle edit action
-        addProductModal.value = true;
+        addInventorytModal.value = true;
         console.log(data)
-        product.value = {
+        inventory.value = {
             id: data.id,
             name: data.name,
             type: data.type,
-            category_id: data.category_id,
+            product_id: data.product_id,
             status: data.status ? 'active' : 'inactive',
             min_stock_hold:data.min_stock_hold,
             max_stock_hold:data.max_stock_hold,
@@ -580,7 +604,7 @@
         };
     }
 
-    const deleteProduct = (id) => {
+    const deleteInventory = (id) => {
         // Handle delete action
         Swal.fire({
             title: "Are you sure?",
@@ -594,9 +618,9 @@
             if (result.isConfirmed) {
                 loading.value = true;
 
-                axios.delete(route('products.destroy',id) ).then( async (response)=>{
+                axios.delete(route('inventories.destroy',id) ).then( async (response)=>{
                     if (response.status === 200) {
-                        await  fetchProducts();
+                        await  fetchInventory();
                     }
                 }).catch(( err  )=>{
                     console.log(err)
@@ -607,12 +631,12 @@
         });
     };
 
-    const addProduct = ()=>{
+    const addInventory = ()=>{
         loading.value = true;
-        axios.post(route('products.store'),product.value).then((res)=>{
+        axios.post(route('inventories.store'),product.value).then((res)=>{
             if( res.status === 200){
-                addProductModal.value =false;
-                fetchProducts();
+                addInventorytModal.value =false;
+                fetchInventory();
             }
         }).catch( (err)=>{
             console.log( err);
@@ -621,13 +645,13 @@
         });
     }
 
-    const  updateProduct = ()=>{
+    const  updateInventory = ()=>{
 
         loading.value = true;
-        axios.put(route('products.update',product.value.id),product.value).then( async (res)=>{
+        axios.put(route('inventories.update',inventory.value.id),inventory.value).then( async (res)=>{
             if( res.status === 200){
                 modalClose();
-                await  fetchProducts();
+                await  fetchInventory();
             }
         }).catch( (err)=>{
             console.log( err);
@@ -636,81 +660,6 @@
         });
     }
 
-    // file upload
-
-    // For file input change event
-    const handleFileSelect = (e) => {
-        const selectedFiles = Array.from(e.target.files)
-        processFiles(selectedFiles)
-    }
-
-    // For drag and drop
-    const handleDrop = (e) => {
-        const droppedFiles = Array.from(e.dataTransfer.files)
-        processFiles(droppedFiles)
-    }
-
-    const processFiles = (uploadedFiles) => {
-        uploadedFiles.forEach(fileObj => {
-            // Validate file type and size
-            if (!fileObj.type.startsWith('image/')) {
-                alert('Please upload only image files.')
-                return
-            }
-            if (fileObj.size > maxFileSize.value) {
-                alert('File size should not exceed 10MB.')
-                return
-            }
-
-            // Create preview URL
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                product.value.image = {
-                    file:fileObj,
-                    name: fileObj.name,
-                    preview: e.target.result
-                };
-
-            }
-            // Read the actual file object (fileObj), not file.value
-            reader.readAsDataURL(fileObj)
-
-        })
-    }
-
-    const removeFile = (index)=> {
-        //files.splice(index, 1)
-        fileData.value ="";
-    }
-
-     const uploadFiles = async ()=> {
-        if (!file.value) return
-
-        uploading.value = true;
-        uploadProgress.value = 0
-
-        // Simulate upload progress
-        const increment = 100 / file.value.length
-         try {
-             // Here you would normally make an API call to upload the file
-             await simulateFileUpload(file, increment)
-         } catch (error) {
-             console.error('Upload failed:', error)
-             alert(`Failed to upload ${file.name}`)
-         }
-
-        uploading.value = false
-        file.value = '';
-    };
-    // Simulate file upload - replace with actual API call
-    const simulateFileUpload =  (file, increment) =>{
-        return new Promise(resolve => {
-            setTimeout(() => {
-                uploadProgress.value += increment
-                resolve()
-            }, 1000)
-        })
-    }
 
     //--------------- data Watchers  ================
     // Add debounce function
@@ -723,7 +672,7 @@
     };
 
     // Debounced version of fetchData
-    const debouncedFetch = debounce( fetchProducts, 300);
+    const debouncedFetch = debounce( fetchInventory, 300);
 
     // Watch for changes in search and server options
     watchEffect(() => {
@@ -733,10 +682,8 @@
     });
 
 
-
-
     //---------------   Initial data fetch ================
-    fetchProducts(serverOptions.value);
+    fetchInventory();
     fetchCategoryList();
 
 
@@ -746,8 +693,7 @@
 </script>
 
 <style scoped>
-    .product-table{
-        --easy-table-rows-per-page-selector-z-index: 1;
-        --easy-table-footer :0;
-    }
+.can-expand{background-color:  red !important;}
+
+
 </style>

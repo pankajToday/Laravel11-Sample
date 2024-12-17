@@ -29,7 +29,7 @@
                                 class="hide-pagination-table"
                                 :search-field="searchField"
                                 :search-value="searchValue"
-                                :pagination-show="false"
+                                hide-footer="false"
                                 show-index
                                 alternating
                                 must-sort

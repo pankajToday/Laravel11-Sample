@@ -47,7 +47,7 @@ class ProductImageObserver
             $webUrl = asset($publicPath);
         }
 
-        $product->baseImages()->updateOrCreate(["product_id" => $product->id ],[
+        $product->baseImage()->updateOrCreate(["product_id" => $product->id ],[
             "product_id" => $product->id,
             "type" => 'primary',
             'url' => request('image')? $webUrl : "/assets/img/dummy-product-5.jpg"
@@ -94,7 +94,7 @@ class ProductImageObserver
             $webUrl = asset($publicPath);
         }
 
-        $product->baseImages()->updateOrCreate(["product_id" => $product->id ],[
+        $product->baseImage()->updateOrCreate(["product_id" => $product->id ],[
             "product_id" => $product->id,
             "type" => 'primary',
             'url' => request('image')? $webUrl : "/assets/img/dummy-product-5.jpg"

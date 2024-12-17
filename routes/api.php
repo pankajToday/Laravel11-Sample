@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,6 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::Resource("/categories",CategoryController::class);
     Route::Resource("/products",ProductController::class);
+    Route::Resource("/inventories",InventoryController::class);
 
 });
