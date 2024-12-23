@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\InventoryResource;
 use App\Models\Inventory;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
+use App\Http\Resources\InventoryResource;
 
 class InventoryController extends Controller
 {
+
+    use CommonTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -19,11 +23,6 @@ class InventoryController extends Controller
         $perPage = $request->input('per_page', 10);
         $selectedCategory =  $request->input('selected_category');
         $searchByName = $request->input('search');
-
-       /* return InventoryResource::collection(
-
-        );*/
-
 
         $inventories =  Inventory::query()
             ->whereHas('product', function($query) {
@@ -66,40 +65,80 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Inventory $inventory)
     {
-        //
+        $inventory->firstOrCreate([ 'id' =>  request('id') ],[
+            "sku" =>  $this->generateUniqueSKU("Inventory") ,
+            "product_id" =>  $request->product_id ,
+            "quantity" =>  $request->quantity ,
+            "quantity_type" => $request->quantity_type ,
+            "status" =>  $request->status ,
+            "base_price" =>  $request->base_price ,
+            "mrp_price" =>  $request->mrp_price ,
+            "sale_price" =>  $request->sale_price ,
+            "discount_id" =>  $request->discount_id ,
+            "discount_amt" =>  $request->discount_amt ,
+
+            "tax_type" =>  $request->tax_type ,
+            "tax_rate" =>  $request->tax_rate ,
+            "tax_amt" =>  $request->tax_amt ,
+            "code_type" =>  $request->code_type,
+            "code_number" =>  $request->code_number,
+            "expiry_date" =>  $request->expiry_date ,
+            "purchase_date" =>  $request->purchase_date ,
+            "status" =>  $request->status ,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Inventory updated successfully',
+        ]);
+
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(Inventory $inventory){}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Inventory $inventory )
     {
-        //
+        $inventory->updateOrCreate([ 'id' =>  request('id') ],[
+            "quantity" =>  $request->quantity ,
+            "quantity_type" => $request->quantity_type ,
+            "status" =>  $request->status ,
+            "base_price" =>  $request->base_price ,
+            "mrp_price" =>  $request->mrp_price ,
+            "sale_price" =>  $request->sale_price ,
+            "discount_id" =>  $request->discount_type ,
+            "discount_amt" =>  $request->discount_amt ,
+
+            "tax_type" =>  $request->tax_type ,
+            "tax_rate" =>  $request->tax_rate ,
+            "tax_amt" =>  $request->tax_amt ,
+            "code_type" =>  $request->code_type,
+            "code_number" =>  $request->code_number,
+            "expiry_date" =>  $request->expiry_date ,
+            "purchase_date" =>  $request->purchase_date ,
+            "status" =>  $request->status ,
+
+        ]);
+    return response()->json(['message' =>'success' ] );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Inventory $inventory)
     {
-        //
+        if( $inventory )
+        {
+            $inventory->delete();
+            return response()->json(['message' =>'deleted'  ],200 );
+        }
+        return response()->json(['data' => [] ],503 );
+
     }
 }

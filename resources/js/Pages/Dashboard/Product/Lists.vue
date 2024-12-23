@@ -292,7 +292,7 @@
                                         </select>
                                     </div>
                                     <div class="col-5">
-                                        <input  v-model="product.inventory.discount_amount" class="form-control form-control-lg mb-2" type="text" placeholder="Max Stock">
+                                        <input  v-model="product.inventory.discount_amount" class="form-control form-control-lg mb-2" type="text" placeholder="Max Discount">
                                     </div>
                                     <div class="col-1 py-2 cursor-pointer">
                                           <span class="group relative">
@@ -309,7 +309,13 @@
                                         </select>
                                     </div>
                                     <div class="col-5">
-                                        <input  v-model="product.inventory.tax_rate" class="form-control form-control-lg mb-2" type="text" placeholder="Allowed Tax Rate for Goods.">
+                                        <div class="input-group">
+                                            <span class="input-group-text h-100 form-control-lg">@</span>
+                                            <input v-model="product.inventory.tax_rate"
+                                                class="form-control form-control-lg mb-2"
+                                                type="text"
+                                                placeholder="Allowed Tax Rate for Goods.">
+                                        </div>
                                     </div>
                                     <div class="col-1 py-2 cursor-pointer">
                                           <span class="group relative">
@@ -515,7 +521,7 @@
                 }));
             }
         } catch (error) {
-            console.error(error);
+            console.log(error);
         } finally {
 
         }
@@ -546,7 +552,7 @@
                     sku:item.sku,
                     quantity:item.quantity,
                     inventory_status:item.inventory_status,
-                    price:'₹'+item.price.mrp_price,
+                    price:  item && item.price ? '₹'+item.price.mrp_price:"N/A",
                     status: item.product_status === 1 ? 'Active' : 'Inactive',
                     image:item.image??'/assets/img/dummy-product-5.jpg',
                     min_stock_hold:item.min_stock_hold,
@@ -557,7 +563,7 @@
                 serverItemsLength.value = items.value.length;
             }
         } catch (error) {
-            console.error(error);
+            console.log(error);
         } finally {
             loading.value = false;
         }

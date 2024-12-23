@@ -77,12 +77,14 @@ class ProductSeed extends Seeder
         $inventory->product_id = $product->id ;
         $inventory->purchase_date = date('Y-m-d');
         $inventory->quantity = rand(100 ,200);
+        $inventory->quantity_type = 'pack';
         $inventory->base_price = rand(100 ,200);
         $inventory->mrp_price =  $inventory->base_price +80;
         $inventory->sale_price = $inventory->base_price +20 ;
         $inventory->status = 'in-stock';
         $inventory->expiry_date = Carbon::now()->addYear(3)->format('Y-m-d');
-        $inventory->barcode='8901030708169';
+        $inventory->code_type='barcode';
+        $inventory->code_number='7897931';
 
         $inventory->save();
     }

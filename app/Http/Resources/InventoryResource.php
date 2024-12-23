@@ -9,42 +9,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class InventoryResource extends ResourceCollection
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-   /* public function toArray(Request $request): array
-    {
-       // return parent::toArray($request);
-        return   [
-            "id"  => $this->id ,
-            "sku" => $this->sku,
-            "category_id" =>$this->product &&  $this->product->category ? $this->product->category->id :"",
-            "category_name" => $this->product &&  $this->product->category ? $this->product->category->name :"",
-            "product_id" => $this->product_id,
-            "product_name" => $this->product ? $this->product->name :"",
-            "product_img" => $this->product &&  $this->product->baseImage ? $this->product->baseImage->url :"/assets/img/dummy-product-5.jpg",
-            "quantity" => $this->quantity,
-            "status" =>$this->status,
-            "base_price" => $this->base_price,
-            "mrp_price" => $this->mrp_price,
-            "sale_price" => $this->sale_price,
-            "min_stock_hold" =>  $this->product ? $this->product->min_stock_hold :0,
-            "max_stock_hold" => $this->product ? $this->product->max_stock_hold :0,
-            "discount_id" => $this->discount_id,
-            "discount_amt" => $this->discount_amount,
-            "tax_type" => $this->tax_id,
-            "tax_rate" => $this->tax_rate,
-            "tax_amt" => $this->tax_amt,
-            "barcode" => $this->barcode,
-            "qucode" => $this->qucode,
-            "expiry_date" => $this->expiry ? Carbon::parse($this->expiry)->format('Y-m-d'):"",
-            "purchase_date" => $this->purchase_date ? Carbon::parse($this->purchase_date)->format('Y-m-d'):""
-        ];
-    }*/
-
-
 
     /**
      * Transform the resource collection into an array.
@@ -86,19 +50,20 @@ class InventoryResource extends ResourceCollection
                         "sku" => $inventory->sku,
                         "product_id" => $inventory->product_id,
                         "quantity" => $inventory->quantity,
+                        "quantity_type" => $inventory->quantity_type,
                         "status" =>$inventory->status,
                         "base_price" => $inventory->base_price,
                         "mrp_price" => $inventory->mrp_price,
                         "sale_price" => $inventory->sale_price,
                         "discount_id" => $inventory->discount_id,
-                        "discount_amt" => $inventory->discount_amount,
-                        "tax_type" => $inventory->tax_id,
+                        "discount_amt" => $inventory->discount_amt,
+                        "tax_type" => $inventory->tax_type,
                         "tax_rate" => $inventory->tax_rate,
                         "tax_amt" => $inventory->tax_amt,
-                        "barcode" => $inventory->barcode,
-                        "qucode" => $inventory->qucode,
-                        "expiry_date" => $inventory->expiry ? Carbon::parse($inventory->expiry)->format('Y-m-d'):"",
-                        "purchase_date" => $inventory->purchase_date ? Carbon::parse($inventory->purchase_date)->format('Y-m-d'):""
+                        "expiry_date" => $inventory->expiry_date ? Carbon::parse($inventory->expiry_date)->format('Y-m-d'):"",
+                        "purchase_date" => $inventory->purchase_date ? Carbon::parse($inventory->purchase_date)->format('Y-m-d'):"",
+                        "code_type" => $inventory->code_type,
+                        "code_number" => $inventory->code_number ,
                         // Add any other relevant inventory fields
                     ];
                 })->values()->toArray()

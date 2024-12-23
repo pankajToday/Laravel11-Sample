@@ -63,6 +63,10 @@
                                         alternating
                                         must-sort
                                     >
+
+                                    <template #item-quantity="{ quantity ,quantity_type}">
+                                        {{ quantity }} {{ quantity_type.toUpperCase() }}
+                                    </template>
                                         <template #item-actions="item">
                                             <div class="operation-wrapper">
                                                 <div class="d-flex gap-2">
@@ -97,182 +101,48 @@
                 <div  class="w-full sm:w-96 md:w-1/2 lg:w-2/3 bg-white rounded-md shadow-xl overflow-hidden z-50">
                     <!-- Modal Header -->
                     <div class=" bg-gray-100 text-white px-2 py-3 flex justify-between">
-                        <span class="text-lg text-black">{{inventory.id ?'Edit':'Add'}} Product   </span>
+                        <span class="text-lg text-black">{{inventory.id ?'Edit':'Add'}} Inventory   </span>
                         <button @click="modalClose()"  type="button" class="btn-close my-1" ></button>
                     </div>
                     <!-- Modal Body -->
                     <div class="p-4 text-dark max-h-[400px] overflow-auto">
                         <div class="w-full flex justify-between">
+
                             <div class="row mx-1 border border-gray-100 rounded-md">
                                 <div class="relative flex items-center justify-center mb-4">
-                                    <h2 class="absolute text-black !bg-white text-lg font-medium px-4 mb-1 border border-gray-50 rounded-md">
-                                        Product Detail
+                                    <h2 class="absolute text-black !bg-white text-lg font-medium px-4 mb-1 border border-gray-100 rounded-md">
+                                      {{ inventory.id ?"Edit":"Add" }}  Product Inventory
                                     </h2>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3 mb-2">
-                                        <label class="col-form-label text-sm-right">Category <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <select v-model="product.inventory_id" class="form-control" name="inventoryLs">
-                                            <option value="" selected>Select Category</option>
-                                            <option :value="category.value"  v-for="category in categoryList">{{category.label}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Name <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.name" class="form-control form-control-lg mb-2" type="text" placeholder="Product Name">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Type</label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input v-model="product.type"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Type">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Min-Stock <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.min_stock_hold" class="form-control form-control-lg mb-2" type="number" placeholder="Minimum Stock">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Max-Stock <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.max_stock_hold" class="form-control form-control-lg mb-2" type="number" placeholder="Max Stock">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Description </label>
-                                    </div>
-                                    <div class="col-8">
-                                        <textarea  v-model="product.description" class="form-control form-control-lg mb-2"  placeholder="Product Description"></textarea>
-                                    </div>
-                                </div>
-                                <div class="w-full my-2">
-                                    <!-- Upload Container -->
-                                    <div
-                                            @dragover.prevent
-                                            @dragleave.prevent
-                                            @drop.prevent="handleDrop"
-                                            :class="['w-full flex justify-between items-center hover:bg-green-100',
-                                                        'border-2 border-dashed rounded-lg text-center transition-colors duration-200',
-                                                        isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400',
 
-                                                      ]"
-                                            @click="$refs.fileInput.click()"
-                                    >
-                                        <div class="my-2 mx-1">
-                                            <!-- Upload Icon -->
-                                            <div class="w-full mb-4">
-                                                <svg
-                                                        class="mx-auto h-12 w-12 text-gray-400"
-                                                        stroke="currentColor"
-                                                        fill="none"
-                                                        viewBox="0 0 48 48"
-                                                >
-                                                    <path
-                                                            d="M24 8L24 32M16 16L24 8L32 16"
-                                                            stroke-width="2"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                    />
-                                                    <path
-                                                            d="M8 32V36C8 37.1046 8.89543 38 10 38H38C39.1046 38 40 37.1046 40 36V32"
-                                                            stroke-width="2"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                    />
-                                                </svg>
-                                            </div>
-
-                                            <!-- Upload Text -->
-                                            <div class="w-full">
-                                                <!-- <p class="mb-2 text-sm text-gray-600">
-                                                     <span class="font-semibold">Click to upload</span> or drag and drop
-                                                 </p>-->
-                                                <p class="text-xs text-gray-500"> Click to upload or drag and drop PNG, JPG, GIF up to 10MB</p>
-
-                                                <!-- Hidden File Input -->
-                                                <input
-                                                        ref="fileInput"
-                                                        type="file"
-                                                        class="hidden"
-                                                        accept="image/*"
-                                                        @change="handleFileSelect"
-                                                        multiple
-                                                />
-                                            </div>
-                                        </div>
-                                        <!-- Preview Section -->
-                                        <div v-if="product.image" class="w-full flex justify-center items-center my-2 gap-4">
-                                            <div class="relative rounded-lg overflow-hidden border border-gray-200">
-                                                <img
-                                                        :src="product.image.preview"
-                                                        class="w-full h-32 object-contain"
-                                                        :alt="product.image.name"
-                                                />
-                                                <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity">
-                                                    <button
-                                                            @click.stop="removeFile()"
-                                                            class="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1 hover:bg-red-600"
-                                                    >
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-4 mb-2">
+                                        <label class="col-form-label text-sm-right">Product  <span class="text-red-500">*</span></label>
+                                    </div>
+                                    <div  class="col-8" >
+                                        <Multiselect
+                                        v-model="inventory.product_id"
+                                        :options="productList"
+                                        :searchable="true"
+                                        :create-option="true"
+                                        :createTag="true"
+                                        mode="single"
+                                        placeholder="Select or create products"
+                                        label="label"
+                                        track-by="value"
+                                        :required="true"
+                                        class="form-control p-0 border-0"
+                                        />
                                     </div>
 
-                                    <!-- Upload Progress (optional) -->
-                                    <div v-if="uploading" class="mt-4">
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div
-                                                    class="bg-blue-600 h-2.5 rounded-full"
-                                                    :style="{ width: `${uploadProgress}%` }"
-                                            ></div>
-                                        </div>
-                                        <p class="text-sm text-gray-600 mt-2">Uploading... {{ uploadProgress }}%</p>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Status <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <select v-model="product.status" class="form-control mb-2">
-                                            <option selected="">Select One</option>
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div v-if="product && product.inventory && !product.inventory.product_id" class="row mx-1 border border-gray-100 rounded-md">
-                                <div class="relative flex items-center justify-center mb-4">
-                                    <h2 class="absolute text-black !bg-white text-lg font-medium px-4 mb-1 border border-gray-50 rounded-md">
-                                        Product Inventory
-                                    </h2>
-                                </div>
+
                                 <div class="row">
                                     <div class="col-4 mb-2">
                                         <label class="col-form-label text-sm-right">Base Price <span class="text-red-500">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input v-model="product.inventory.base_price"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Base Price">
+                                        <input v-model="inventory.base_price"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Base Price">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -280,15 +150,26 @@
                                         <label class="col-form-label text-sm-right">MRP Price <span class="text-red-500">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input  v-model="product.inventory.mrp_price" class="form-control form-control-lg mb-2" type="number" placeholder="Product MRP. Price">
+                                        <input  v-model="inventory.mrp_price" class="form-control form-control-lg mb-2" type="number" placeholder="Product MRP. Price">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="col-form-label text-sm-right">Quantity</label>
                                     </div>
-                                    <div class="col-8">
-                                        <input v-model="product.inventory.quantity"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Quantity">
+                                    <div class="col-4">
+                                        <input v-model="inventory.quantity"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Quantity">
+                                    </div>
+                                    <div class="col-4">
+                                        <Multiselect
+                                        v-model="inventory.quantity_type"
+                                        :options="unitList"
+                                        :searchable="true"
+                                        placeholder="Select Unit"
+                                        :required="true"
+                                        class="form-control p-0 border-0"
+                                        />
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -296,18 +177,18 @@
                                         <label class="col-form-label text-sm-right">Sale Price <span class="text-red-500">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input  v-model="product.inventory.sale_price" class="form-control form-control-lg mb-2" type="number" placeholder="Sale Price">
+                                        <input  v-model="inventory.sale_price" class="form-control form-control-lg mb-2" type="number" placeholder="Sale Price">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <select  v-model="product.inventory.discount_id" class="form-control form-control-lg mb-2" >
+                                        <select  v-model="inventory.discount_id" class="form-control form-control-lg mb-2" >
                                             <option value="flat" selected>Flat Discount</option>
                                             <option value="percentage">Percentage %</option>
                                         </select>
                                     </div>
                                     <div class="col-5">
-                                        <input  v-model="product.inventory.discount_amount" class="form-control form-control-lg mb-2" type="text" placeholder="Max Stock">
+                                        <input  v-model="inventory.discount_amt" class="form-control form-control-lg mb-2" type="text" placeholder="Max Discount">
                                     </div>
                                     <div class="col-1 py-2 cursor-pointer">
                                           <span class="group relative">
@@ -318,13 +199,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <select  v-model="product.inventory.tax_id" class="form-control form-control-lg mb-2" >
+                                        <select  v-model="inventory.tax_type" class="form-control form-control-lg mb-2" >
                                             <option value="gst" selected>GST</option>
                                             <option value="vat">VAT</option>
                                         </select>
                                     </div>
                                     <div class="col-5">
-                                        <input  v-model="product.inventory.tax_rate" class="form-control form-control-lg mb-2" type="text" placeholder="Allowed Tax Rate for Goods.">
+                                        <div class="input-group">
+                                            <span class="input-group-text h-100 form-control-lg">@</span>
+                                            <input v-model="inventory.tax_rate"
+                                                class="form-control form-control-lg mb-2"
+                                                type="text"
+                                                placeholder="Allowed Tax Rate for Goods.">
+                                        </div>
                                     </div>
                                     <div class="col-1 py-2 cursor-pointer">
                                           <span class="group relative">
@@ -336,13 +223,13 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <select  v-model="product.inventory.code_type" class="form-control form-control-lg mb-2" >
-                                            <option value="barcode" selected>Barcode</option>
-                                            <option value="qrcode">QR-code</option>
+                                        <select  v-model="inventory.code_type" class="form-control form-control-lg mb-2" >
+                                            <option value="barcode" >Barcode</option>
+                                            <option value="qrcode" >QR-code</option>
                                         </select>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number"  v-model="product.inventory.code_number" class="form-control form-control-lg mb-2"  placeholder="Product Description"></input>
+                                        <input type="number"  v-model="inventory.code_number" class="form-control form-control-lg mb-2"  placeholder="Product Description"></input>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -350,7 +237,12 @@
                                         <label class="col-form-label text-sm-right">Purchase Date </label>
                                     </div>
                                     <div class="col-8">
-                                        <input  v-model="product.inventory.purchase_date" class="form-control form-control-lg mb-2" type="date" placeholder="Product Buy Date">
+                                        <input  v-model="inventory.purchase_date" 
+                                        class="form-control form-control-lg mb-2"
+                                         type="date" 
+                                         :max="getCurrentDate()"
+                                         :min="getMin5Date()"
+                                         placeholder="Product Expiry Date">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -358,7 +250,11 @@
                                         <label class="col-form-label text-sm-right">Expiry </label>
                                     </div>
                                     <div class="col-8">
-                                        <input  v-model="product.inventory.expiry" class="form-control form-control-lg mb-2" type="date" placeholder="Product Expiry Date">
+                                        <input  v-model="inventory.expiry_date" 
+                                        class="form-control form-control-lg mb-2"
+                                         type="date" 
+                                         :min="getMinDate()"
+                                         placeholder="Product Expiry Date">
                                     </div>
                                 </div>
 
@@ -367,7 +263,7 @@
                                         <label class="col-form-label text-sm-right">Status <span class="text-red-500">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <select v-model="product.inventory.status" class="form-control mb-2">
+                                        <select v-model="inventory.status" class="form-control mb-2">
                                             <option value="in-stock">In-Stock</option>
                                             <option value="out-stock">Out-Stock</option>
                                             <option value="expired">Expired</option>
@@ -383,8 +279,8 @@
                     <!-- Modal Footer -->
                     <div class="border-t px-4 py-2 flex justify-end">
                         <button  @click="modalClose()"  type="button" class="px-3 py-1 mx-2  text-black  rounded-md w-full sm:w-auto bg-gray-100" >Close</button>
-                        <button v-if="product.id"   @click="updateProduct()"  type="button" class="px-3 py-1  mx-2 text-white  rounded-md w-full sm:w-auto  bg-indigo-500" data-bs-dismiss="modal">Update</button>
-                        <button v-if="!product.id" @click="addProduct()" type="button" class="px-3 py-1  mx-2 text-white  rounded-md w-full sm:w-auto bg-indigo-500">Save </button>
+                        <button v-if="inventory.id"   @click="updateInventory()"  type="button" class="px-3 py-1  mx-2 text-white  rounded-md w-full sm:w-auto  bg-indigo-500" data-bs-dismiss="modal">Update</button>
+                        <button v-if="!inventory.id" @click="addInventory()" type="button" class="px-3 py-1  mx-2 text-white  rounded-md w-full sm:w-auto bg-indigo-500">Save </button>
                     </div>
                 </div>
             </div>
@@ -409,6 +305,9 @@
 
     import Swal from 'sweetalert2/dist/sweetalert2.js'
     import 'sweetalert2/src/sweetalert2.scss'
+
+    import Multiselect from '@vueform/multiselect'
+    import '@vueform/multiselect/themes/default.css'
 
     //---------------  define  data ================
     const  pageName = ref("Inventory");
@@ -445,8 +344,7 @@
         { text: "₹ MRP", value: "mrp_price", sortable: true, width: 90},
         { text: "₹ Sale", value: "sale_price", sortable: true, width: 90},
         { text: "Expiry", value: "expiry_date", sortable: true, width: 90},
-        { text: "QuCode", value: "qucode", sortable: true, width: 90},
-        { text: "BarCode", value: "barcode", sortable: true, width: 90},
+        { text: "Qr/Bar Code", value: "code_number", sortable: true, width: 90},
         { text: "Status", value: "status", sortable: true, width: 90},
         { text: "Action", value: "actions",  width: 300, sortable: false,
             html: true// Enable HTML rendering for this column
@@ -461,27 +359,34 @@
     const categoryList = ref([]);
     const itemsSelected = ref([]);
     const inventory = ref({
+            id:'',
+            sku:"",
             product_id:"" ,
             quantity:1,
+            quantity_type:'pack',
             status:"in-stock",
             base_price:0,
             mrp_price:0,
             sale_price:0,
             discount_id:'flat',
-            discount_amount:0,
-            tax_id:'gst',
+            discount_amt:0,
+            tax_type:'gst',
             tax_rate:0,
             tax_amt:0,
             code_number:0,
-            code_type:'barcode',
-            expiry:"",
-            purchase_date:"",
+            code_type:'',
+            expiry_date:"",
+            purchase_date: new Date().toISOString().split('T')[0],
     }
     );
     const discountTooltip = ref("Select product discount type and max allowed discount for sale.");
     const taxTooltip = ref("Select Tax Format and rate for good for sale.");
     const addInventorytModal = ref(false);
     const selectedCategory =ref("");
+
+    const productList = ref([])
+    const selectedProduct = ref('')
+    const unitList = ref([  'kg', 'gram', 'liter','ml',  'piece',  'dozen', 'box','pack',"other" ])
 
     // file upload....
     const fileData = ref("")
@@ -502,12 +407,12 @@
             mrp_price:0,
             sale_price:0,
             discount_id:'flat',
-            discount_amount:0,
-            tax_id:'gst',
+            discount_amt:0,
+            tax_type:'gst',
             tax_rate:0,
             tax_amt:0,
             code_number:0,
-            code_type:'barcode',
+            code_type:'',
             expiry:"",
             purchase_date:""
         }
@@ -562,6 +467,7 @@
                         "sku" : inventory.sku ,
                         "product_id" : inventory.product_id ,
                         "quantity" : inventory.quantity ,
+                        "quantity_type" : inventory.quantity_type ,
                         "status" : inventory.status ,
                         "base_price" : inventory.base_price ,
                         "mrp_price" : inventory.mrp_price ,
@@ -571,13 +477,14 @@
                         "tax_type" : inventory.tax_type ,
                         "tax_rate" : inventory.tax_rate ,
                         "tax_amt" : inventory.tax_amt ,
-                        "barcode" : inventory.barcode ,
-                        "qucode" : inventory.qucode ,
                         "expiry_date" : inventory.expiry_date ,
                         "purchase_date" : inventory.purchase_date ,
+                        "code_type" : inventory.code_type ,
+                        "code_number" : inventory.code_number ,
                     }))
 
                 }));
+
                 serverItemsLength.value = items.value.length;
             }
         } catch (error) {
@@ -591,17 +498,7 @@
     const editInventory = (data) => {
         // Handle edit action
         addInventorytModal.value = true;
-        console.log(data)
-        inventory.value = {
-            id: data.id,
-            name: data.name,
-            type: data.type,
-            product_id: data.product_id,
-            status: data.status ? 'active' : 'inactive',
-            min_stock_hold:data.min_stock_hold,
-            max_stock_hold:data.max_stock_hold,
-            description:data.description,
-        };
+        inventory.value =  data;
     }
 
     const deleteInventory = (id) => {
@@ -632,8 +529,15 @@
     };
 
     const addInventory = ()=>{
+        if (new Date(inventory.value.purchase_date) > new Date()) {
+            toast.error("Purchase date cannot be in the future");
+            return;
+        }
+    
+
+
         loading.value = true;
-        axios.post(route('inventories.store'),product.value).then((res)=>{
+        axios.post(route('inventories.store'),inventory.value).then((res)=>{
             if( res.status === 200){
                 addInventorytModal.value =false;
                 fetchInventory();
@@ -645,7 +549,32 @@
         });
     }
 
+    const fetchProductList=  async () => {
+        loading.value = true;
+        try {
+            const response = await axios.get(route('products.index'), {
+                params: {}
+            });
+
+            if (response.status === 200) {
+                // Map the response data to include transformed values
+                productList.value  = response.data.data.map( (item,i) => ({
+                    label: item.name, 
+                    value: item.id
+                }));
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
     const  updateInventory = ()=>{
+        if (new Date(inventory.value.purchase_date) > new Date()) {
+            toast.error("Purchase date cannot be in the future");
+            return;
+        }
 
         loading.value = true;
         axios.put(route('inventories.update',inventory.value.id),inventory.value).then( async (res)=>{
@@ -659,6 +588,24 @@
             loading.value = false;
         });
     }
+
+    const getCurrentDate = () => {
+        return new Date().toISOString().split('T')[0];
+    }
+    
+    const getMin5Date = () => {
+        const date = new Date();
+        date.setDate(date.getDate() - 5);
+        return date.toISOString().split('T')[0];
+    }
+
+    const getMinDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate());
+        return date.toISOString().split('T')[0];
+    }
+
+   
 
 
     //--------------- data Watchers  ================
@@ -685,6 +632,7 @@
     //---------------   Initial data fetch ================
     fetchInventory();
     fetchCategoryList();
+    fetchProductList();
 
 
 

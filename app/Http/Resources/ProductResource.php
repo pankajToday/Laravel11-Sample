@@ -54,6 +54,7 @@ class ProductResource extends JsonResource
                 // "sku"=> $data->sku ,
                 "product_id" => $data->product_id,
                 "quantity" => $data->quantity,
+                "quantity_type" => $data->quantity_type,
                 "status" =>$data->status,
                 "base_price" => $data->base_price,
                 "mrp_price" => $data->mrp_price,
@@ -65,8 +66,8 @@ class ProductResource extends JsonResource
                 "tax_type" => $data->tax_id,
                 "tax_rate" => $data->tax_rate,
                 "tax_amt" => $data->tax_amt,
-                "barcode" => $data->barcode,
-                "qucode" => $data->qucode,
+                "code_type" => $data->code_type,
+                "code_number" => $data->code_number,
                 "expiry_date" => $data->expiry ? Carbon::parse($data->expiry)->format('Y-m-d'):"",
                 "purchase_date" => $data->purchase_date ? Carbon::parse($data->purchase_date)->format('Y-m-d'):""
             ];

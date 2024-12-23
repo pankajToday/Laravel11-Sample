@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sku')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->date('purchase_date')->nullable();
+            $table->enum('quantity_type' ,[ 'kg', 'gram', 'liter','ml',  'piece',  'dozen', 'box','pack',"other"])->nullable();
             $table->unsignedInteger('quantity')->nullable();
             $table->decimal('base_price',2)->default(0);
             $table->decimal('mrp_price',2)->default(0);
@@ -26,8 +27,8 @@ return new class extends Migration
             $table->string('tax_rate')->nullable();
             $table->decimal('tax_amt')->nullable();
             $table->enum('status' ,['in-stock','out-stock','expired','damaged','returned','ordered'])->nullable();
-            $table->string('barcode')->nullable();
-            $table->string('qucode')->nullable();
+            $table->string('code_type')->nullable();
+            $table->string('code_number')->nullable();
             $table->date('expiry_date')->nullable();
 
             $table->timestamps();
