@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-#[ObservedBy([ProductObserver::class])]
-#[ObservedBy([ProductImageObserver::class])]
+
 class Product extends Model
 {
     use HasFactory , SoftDeletes;
@@ -30,7 +29,7 @@ class Product extends Model
     }
 
 
-    function inventory(){
-        return $this->hasMany( Inventory::class ,'product_id','id' );
+    function productDetail(){
+        return $this->hasMany( productDetail::class ,'product_id','id' );
     }
 }

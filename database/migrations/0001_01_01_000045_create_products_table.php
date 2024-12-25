@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('sku',30)->index();
             $table->unsignedBigInteger('category_id')->index()->nullable();
-            $table->string('name',30);
-            $table->string('slug',30)->index();
+            $table->string('brand_id')->index()->nullable();
+            $table->string('name',50);
             $table->string('type',30)->nullable();
             $table->text('description')->nullable();
-            $table->unsignedInteger('min_stock_hold')->default(1);
-            $table->unsignedInteger('max_stock_hold')->default(5000);
+            $table->enum('food_type',['veg','non-veg'])->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();
             $table->softDeletes();

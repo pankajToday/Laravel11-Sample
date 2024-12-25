@@ -40,16 +40,22 @@
                                 must-sort
                         >
 
-                            <template #item-name="{ name,id ,image}">
+                            <template #item-name="{ name,id ,image,unit_size,unit}">
                                 <div class="player-wrapper d-flex align-center">
                                     <div class="ms-2 text-decoration-none ">
-                                        <a  :href="route('products.show',id)" title="View Product" target="_blank"  class="flex mx-1 my-1 no-underline justify-start items-center text-indigo-500 font-bold">
+                                        <a  :href="route('products.show',id)" title="View Product" target="_blank"  class="flex mx-1 my-1 no-underline justify-start items-center">
                                             <img :src="image" class="h-10 w-10 rounded-lg shadow-sm">
-                                            <span class="text-subtitle-1 mb-0  px-2">{{ name }}</span>
+                                            <div class="flex flex-col">
+                                                <span class="text-subtitle-1 mb-0 px-1 text-indigo-500 font-bold">{{ name }}</span>
+                                                 <span class="text-subtitle-2 mb-0 px-1 text-xs text-gray-800">{{ unit_size }} {{unit}}</span>
+                                            </div>
 
                                         </a>
                                     </div>
                                 </div>
+                            </template>
+                            <template #item-in_stock_quantity="{in_stock_quantity}">
+                                {{ in_stock_quantity.quantity}} {{in_stock_quantity.quantity_type }}
                             </template>
                             <template #item-actions="item">
                                 <div class="operation-wrapper">
@@ -115,6 +121,22 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
+                                        <label class="col-form-label text-sm-right">Brand<span class="text-red-500">*</span></label>
+                                    </div>
+                                    <div class="col-8">
+                                        <multiselect
+                                              v-model="product.brand_id"
+                                             tag-placeholder="Add this as new tag" 
+                                             placeholder="Search or add a tag" 
+                                             :options="brandOptions" 
+                                             :multiple="false" 
+                                             :taggable="true"
+                                              @tag="addTag">
+                                        </multiselect>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
                                         <label class="col-form-label text-sm-right">Type</label>
                                     </div>
                                     <div class="col-8">
@@ -123,20 +145,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Min-Stock <span class="text-red-500">*</span></label>
+                                        <label class="col-form-label text-sm-right">Food Type</label>
                                     </div>
                                     <div class="col-8">
-                                        <input  v-model="product.min_stock_hold" class="form-control form-control-lg mb-2" type="number" placeholder="Minimum Stock">
+                                        <select  v-model="product.food_type"  class="form-control form-control-lg mb-2" >
+                                            <option value="" selected>Select One</option>
+                                            <option value="veg">Veg</option>
+                                            <option value="non-veg">Non Veg</option>
+
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label text-sm-right">Max-Stock <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.max_stock_hold" class="form-control form-control-lg mb-2" type="number" placeholder="Max Stock">
-                                    </div>
-                                </div>
+                               
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label text-sm-right">Description </label>
@@ -145,7 +165,7 @@
                                         <textarea  v-model="product.description" class="form-control form-control-lg mb-2"  placeholder="Product Description"></textarea>
                                     </div>
                                 </div>
-                                <div class="w-full my-2">
+                                <div class="w-50 my-2">
                                     <!-- Upload Container -->
                                     <div
                                             @dragover.prevent
@@ -246,129 +266,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="product && product.inventory && !product.inventory.product_id" class="row mx-1 border border-gray-100 rounded-md">
-                                <div class="relative flex items-center justify-center mb-4">
-                                    <h2 class="absolute text-black !bg-white text-lg font-medium px-4 mb-1 border border-gray-50 rounded-md">
-                                        Product Inventory
-                                    </h2>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 mb-2">
-                                        <label class="col-form-label text-sm-right">Base Price <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input v-model="product.inventory.base_price"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Base Price">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">MRP Price <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.inventory.mrp_price" class="form-control form-control-lg mb-2" type="number" placeholder="Product MRP. Price">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Quantity</label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input v-model="product.inventory.quantity"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Quantity">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Sale Price <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.inventory.sale_price" class="form-control form-control-lg mb-2" type="number" placeholder="Sale Price">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select  v-model="product.inventory.discount_id" class="form-control form-control-lg mb-2" >
-                                            <option value="flat" selected>Flat Discount</option>
-                                            <option value="percentage">Percentage %</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-5">
-                                        <input  v-model="product.inventory.discount_amount" class="form-control form-control-lg mb-2" type="text" placeholder="Max Discount">
-                                    </div>
-                                    <div class="col-1 py-2 cursor-pointer">
-                                          <span class="group relative">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            <ToolTipCom  :message="discountTooltip"></ToolTipCom>
-                                          </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select  v-model="product.inventory.tax_id" class="form-control form-control-lg mb-2" >
-                                            <option value="gst" selected>GST</option>
-                                            <option value="vat">VAT</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="input-group">
-                                            <span class="input-group-text h-100 form-control-lg">@</span>
-                                            <input v-model="product.inventory.tax_rate"
-                                                class="form-control form-control-lg mb-2"
-                                                type="text"
-                                                placeholder="Allowed Tax Rate for Goods.">
-                                        </div>
-                                    </div>
-                                    <div class="col-1 py-2 cursor-pointer">
-                                          <span class="group relative">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            <ToolTipCom  :message="taxTooltip"></ToolTipCom>
-                                          </span>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-4">
-                                        <select  v-model="product.inventory.code_type" class="form-control form-control-lg mb-2" >
-                                            <option value="barcode" selected>Barcode</option>
-                                            <option value="qrcode">QR-code</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-8">
-                                        <input type="number"  v-model="product.inventory.code_number" class="form-control form-control-lg mb-2"  placeholder="Product Description"></input>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Purchase Date </label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.inventory.purchase_date" class="form-control form-control-lg mb-2" type="date" placeholder="Product Buy Date">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Expiry </label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="product.inventory.expiry" class="form-control form-control-lg mb-2" type="date" placeholder="Product Expiry Date">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Status <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <select v-model="product.inventory.status" class="form-control mb-2">
-                                            <option value="in-stock">In-Stock</option>
-                                            <option value="out-stock">Out-Stock</option>
-                                            <option value="expired">Expired</option>
-                                            <option value="damaged">Damaged</option>
-                                            <option value="returned">Returned</option>
-                                            <option value="ordered">Ordered</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- Modal Footer -->
@@ -401,10 +299,12 @@
     import Swal from 'sweetalert2/dist/sweetalert2.js'
     import 'sweetalert2/src/sweetalert2.scss'
 
+    import Multiselect from 'vue-multiselect'
+    import "vue-multiselect/dist/vue-multiselect.css"
+
     //---------------  define  data ================
-    const  pageName = ref("Products");
+    const pageName = ref("Products");
     const loading = ref(false)
-    const selectedItems = ref([]);
     const serverItemsLength = ref(0);
     const serverOptions = ref({
         page: 1,
@@ -414,13 +314,12 @@
     });
 
     const headers = [
-        { text: "Name", value: "name", sortable: true , fixed: true,   width: 200,},
-        { text: "Category", value: "category_name", sortable: true , fixed: true,   width: 180,},
-        { text: "Sku", value: "sku", sortable: true,fixed: true, width: 160},
-        { text: "Type", value: "type", sortable: true,fixed: true, width: 60},
-        { text: "Quantity", value: "quantity", sortable: true,fixed: true, width: 90},
-        { text: "Pro. Status", value: "inventory_status", sortable: true,fixed: true, width: 90},
-        { text: "₹ MRP", value: "price", sortable: true,fixed: true, width: 90},
+        { text: "Name", value: "name", sortable: true , fixed: true,   width: 200},
+        { text: "Category", value: "category_name", sortable: true , fixed: true,   width: 180},
+        { text: "Brand", value: "brand_id", sortable: true ,fixed: true, },
+        { text: "Sku", value: "sku"  , fixed: true,  width: 180},
+        { text: "Type", value: "type", sortable: true , fixed: true,},
+        { text: "Food Type", value: "food_type", sortable: true,fixed: true, width: 90},
         { text: "Status", value: "status", sortable: true,fixed: true, width: 70},
         { text: "Action", value: "actions", fixed: true, width: 300, sortable: false,
             html: true// Enable HTML rendering for this column
@@ -430,43 +329,26 @@
     const searchField = ref('name');
     const searchValue = ref('');
     const items = ref([]);
-    const sortBy = ref(["name", "type"]);
-    const sortType = ref(["desc", "asc"]);
     const categoryList = ref([]);
-    const itemsSelected = ref([]);
     const product = ref({
         id:"",
         name:"",
         type:"",
+        brand_id:"",
         category_id:"",
         category_name:"",
-        min_stock_hold:1,
-        max_stock_hold:100,
         description:"",
-        status:"inactive" ,
-        inventory:{
-            product_id:"" ,
-            quantity:1,
-            status:"in-stock",
-            base_price:0,
-            mrp_price:0,
-            sale_price:0,
-            discount_id:'flat',
-            discount_amount:0,
-            tax_id:'gst',
-            tax_rate:0,
-            tax_amt:0,
-            code_number:0,
-            code_type:'barcode',
-            expiry:"",
-            purchase_date:"",
-        }
+        status:"active" ,
+        sku:"",
+        food_type:""
 
     });
-    const discountTooltip = ref("Select product discount type and max allowed discount for sale.");
-    const taxTooltip = ref("Select Tax Format and rate for good for sale.");
+   
     const addProductModal = ref(false);
     const selectedCategory =ref("");
+
+    // Add this to your existing data refs
+    const brandOptions = ref([]);
 
     // file upload....
     const fileData = ref("")
@@ -482,30 +364,13 @@
         product.value = {
             id:"",
             name:"",
+            brand_id:"",
             type:"",
             category_id:"",
             category_name:"",
-            min_stock_hold:1,
-            max_stock_hold:100,
             description:"",
             status:"inactive" ,
-            inventory:{
-                product_id:"" ,
-                quantity:1,
-                status:"in-stock",
-                base_price:0,
-                mrp_price:0,
-                sale_price:0,
-                discount_id:'flat',
-                discount_amount:0,
-                tax_id:'gst',
-                tax_rate:0,
-                tax_amt:0,
-                code_number:0,
-                code_type:'barcode',
-                expiry:"",
-                purchase_date:""
-            }
+            food_type:"",
         }
         fileData.value ='';
         uploadProgress.value =0;
@@ -548,9 +413,12 @@
                     name: item.name,
                     category_id:item.category_id,
                     category_name:item.category_name,
+                    unit: item.unit,
+                    unit_size:item.unit_size,
+                    brand_id:item.brand_id,
                     type: item.type || 'N/A',
                     sku:item.sku,
-                    quantity:item.quantity,
+                    in_stock_quantity:item.in_stock_quantity,
                     inventory_status:item.inventory_status,
                     price:  item && item.price ? '₹'+item.price.mrp_price:"N/A",
                     status: item.product_status === 1 ? 'Active' : 'Inactive',
@@ -573,16 +441,15 @@
     const editProduct = (data) => {
         // Handle edit action
         addProductModal.value = true;
-        console.log(data)
         product.value = {
             id: data.id,
             name: data.name,
             type: data.type,
             category_id: data.category_id,
+            brand_id:data.brand_id,
             status: data.status ? 'active' : 'inactive',
-            min_stock_hold:data.min_stock_hold,
-            max_stock_hold:data.max_stock_hold,
             description:data.description,
+            food_type:data.food_type,
         };
     }
 
@@ -641,6 +508,28 @@
             loading.value = false;
         });
     }
+
+// Add this function to fetch brands
+    const fetchBrands = async () => {
+            try { 
+                brandOptions.value =[];
+                const response = await axios.post('/api/get-brands')
+                    if (response.status === 200 && response.data.length > 0) {
+                        response.data.forEach( (brand) => {
+                            brandOptions.value.push(brand)
+                        })
+                    } 
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    // Add this function to add brands option list
+    const addTag = (newTag) => {
+        brandOptions.value.push(newTag)
+        product.value.brand_id = newTag;
+    }
+
+
 
     // file upload
 
@@ -738,8 +627,12 @@
         }
     });
 
-
-
+    watchEffect(() => {
+        if( addProductModal.value){
+            fetchBrands();
+        }
+    });
+    
 
     //---------------   Initial data fetch ================
     fetchProducts(serverOptions.value);
@@ -756,4 +649,8 @@
         --easy-table-rows-per-page-selector-z-index: 1;
         --easy-table-footer :0;
     }
+
+
+
 </style>
+

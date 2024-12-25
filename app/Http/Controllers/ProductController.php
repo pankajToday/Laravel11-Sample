@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
-use App\Models\Category;
-use App\Models\Product;
-use App\Traits\CommonTrait;
 use Carbon\Carbon;
+use App\Models\Product;
+use App\Models\Category;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -47,6 +48,13 @@ class ProductController extends Controller
         );
     }
 
+    public function getBrands(){
+        return  Product::select('brand_id')->get()->pluck('brand_id')->filter()->unique()->values();
+        
+    }
+
+
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -61,19 +69,27 @@ class ProductController extends Controller
      */
     public function store( Request $request , Product $product )
     {
-        try{
-             $product->updateOrCreate(['name' =>  request('name'),'category_id' => request('category_id')],[
-                "name" =>  $request->name ,
-                "sku" => $this->generateUniqueSKU('Product')  ,
-                "category_id" =>  $request->category_id ,
-                "type" =>  $request->type ,
-                "max_stock_hold" =>  $request->max_stock_hold ,
-                "min_stock_hold" =>  $request->min_stock_hold ,
-                "description" =>  $request->description ,
-                "status" =>  $request->status === 'active' ?1:0 ,
-                "slug" =>   \Illuminate\Support\Str::slug( request('name') ) ,
-            ]);
+        $request->validate([
+            'name' => 'required|string|max:155',
+            'category_id' => 'required|exists:categories,id',
+            'type' => 'nullable|string|max:155',
+            'description' => 'nullable|string',
+            'status' => 'required|in:1,0',
+            'brand_id' => 'required',
+            'food_type' => 'nullable|in:veg,non-veg',
+        ]);
 
+        try{
+            $data =[ "name" =>  $request->name ,
+            "sku" => $this->generateUniqueSKU('Product')  ,
+            "category_id" =>  $request->category_id ,
+            "type" =>  $request->type ,
+            "description" =>  $request->description ,
+            "status" =>  $request->status === 'active' ?1:0 ,
+            "brand_id" =>  $request->brand_id ,
+            "food_type" =>  $request->food_type ];
+
+            Product::create($data);
 
             return response()->json(['message' =>'success' ] );
         }
@@ -103,18 +119,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-
-            $product->updateOrCreate(['name' =>  request('name'),'category_id' => request('category_id')],[
-                "name" =>  $request->name ,
-                "sku" => $this->generateUniqueSKU('Product')  ,
-                "category_id" =>  $request->category_id ,
-                "type" =>  $request->type ,
-                "max_stock_hold" =>  $request->max_stock_hold ,
-                "min_stock_hold" =>  $request->min_stock_hold ,
-                "description" =>  $request->description ,
-                "status" =>  $request->status === 'active' ?1:0 ,
-                "slug" =>   \Illuminate\Support\Str::slug( request('name') ) ,
-            ]);
+        $request->validate([
+           // 'name' => ['required', 'string', 'max:155', Rule::unique('products')->ignore($product->id)],
+            'category_id' => 'required|exists:categories,id',
+            'type' => 'nullable|string|max:155',
+            'description' => 'nullable|string',
+            'status' => 'required|in:active,inactive',
+            'brand_id' => 'required',
+            'food_type' => 'nullable|in:veg,non-veg',
+             'images' => 'nullable|array',
+        ]);
+        
+        
+        $product->updateOrCreate(['name' =>  request('name'),'category_id' => request('category_id')],[
+            "name" =>  $request->name ,
+            "sku" => $this->generateUniqueSKU('Product')  ,
+            "category_id" =>  $request->category_id ,
+            "type" =>  $request->type ,
+            "description" =>  $request->description ,
+            "status" =>  $request->status === 'active' ?1:0 ,
+            "brand_id" =>  $request->brand_id ,
+            "food_type" =>  $request->food_type ,
+        ]);
         return response()->json(['message' =>'success' ] );
     }
 

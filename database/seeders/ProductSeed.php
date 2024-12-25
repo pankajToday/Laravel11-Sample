@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Inventory;
-use App\Models\Product;
-use App\Models\ProductImage;
-use App\Traits\CommonTrait;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use App\Models\Product;
+use App\Models\Inventory;
+use App\Models\productDetail;
+use App\Traits\CommonTrait;
 use Illuminate\Support\Str;
+use App\Models\ProductImage;
+use Illuminate\Database\Seeder;
+
 
 class ProductSeed extends Seeder
 {
@@ -23,29 +24,44 @@ class ProductSeed extends Seeder
         $particulars=[
             [
                 'sku' => $this->generateUniqueSKU('Product') , // Generates a SKU like SKU-ABCD1234
-                'category_id'=>1,
+                'category_id'=>14,
                 'name' => 'Rise',
-                'slug' => 'rice',
-                'min_stock_hold' => 1,
-                'max_stock_hold' => 1000,
+                 "brand_id" => "Lal Gulab", 
                 'status' => 1
             ],
             [
                 'sku' => $this->generateUniqueSKU('Product') ,
-                'category_id'=>1,
+                'category_id'=>14,
                 'name' => 'Wheat',
-                'slug' => 'wheat',
-                'min_stock_hold' => 1,
-                'max_stock_hold' => 1000,
+                "brand_id" => "Ashirwad", 
+                'status' => 1
+            ],
+            [
+                'sku' =>  $this->generateUniqueSKU('Product') ,
+                'category_id'=>9,
+                'name' => 'Milk Cake',
+                "brand_id" => "Ashirwad", 
+                'status' => 1
+            ],
+            [
+                'sku' =>  $this->generateUniqueSKU('Product') ,
+                'category_id'=>9,
+                'name' => 'White Bread',
+                "brand_id" => "Kisan", 
                 'status' => 1
             ],
             [
                 'sku' =>  $this->generateUniqueSKU('Product') ,
                 'category_id'=>11,
-                'name' => 'Milk Cake',
-                'slug' => 'milk-cake',
-                'min_stock_hold' => 1,
-                'max_stock_hold' => 1000,
+                'name' => 'Ashirwad Cow Milk',
+                "brand_id" => "Ashirwad", 
+                'status' => 1
+            ],
+            [
+                'sku' =>  $this->generateUniqueSKU('Product') ,
+                'category_id'=>11,
+                'name' => 'Ashirwad Cow Milk',
+                "brand_id" => "Ashirwad", 
                 'status' => 1
             ],
 
@@ -57,7 +73,9 @@ class ProductSeed extends Seeder
             // create product image.
             $this->productImage( $product );
 
-            $this->inventory( $product );
+            $fm = $this->productDetails( $product );
+
+            $this->inventory( $fm );
         }
     }
 
@@ -70,22 +88,45 @@ class ProductSeed extends Seeder
         $productImage->save();
     }
 
+    
+    function productDetails( $product  ){
+        $productDetail = new  productDetail();
+        
+        $productDetail->product_id = $product->id;
+        $productDetail->unit =  "ml";
+        $productDetail->unit_size = "100" ;
+        $productDetail->min_stock_hold =  10 ;
+        $productDetail->max_stock_hold =  100;
+        $productDetail->base_price = rand(100 ,200) ;
+        $productDetail->mrp_price =  $productDetail->base_price +20 ;
+        $productDetail->sale_price = $productDetail->base_price + 30;
+        $productDetail->discount_id =  "flat";
+        $productDetail->discount_amt = 5 ;
+        $productDetail->code_type =   'barcode' ;
+        $productDetail->code_number = rand(10000,99999);
+
+        $productDetail->save();
+
+        return $productDetail;
+
+    }
+
     function inventory( $product ){
-        $inventory =  Inventory::firstOrNew([ 'product_id' => $product->id ]);
+        $inventory = new Inventory();
 
         $inventory->sku = $this->generateUniqueSKU('Inventory') ;
-        $inventory->product_id = $product->id ;
+        $inventory->product_detail_id = $product->id ;
+        $inventory->batch_number = rand(10000 ,99999);
         $inventory->purchase_date = date('Y-m-d');
         $inventory->quantity = rand(100 ,200);
         $inventory->quantity_type = 'pack';
-        $inventory->base_price = rand(100 ,200);
-        $inventory->mrp_price =  $inventory->base_price +80;
-        $inventory->sale_price = $inventory->base_price +20 ;
         $inventory->status = 'in-stock';
-        $inventory->expiry_date = Carbon::now()->addYear(3)->format('Y-m-d');
-        $inventory->code_type='barcode';
-        $inventory->code_number='7897931';
+        $inventory->vendor = 'ABC company';
+        $inventory->bill_number = date('mYd-').rand(10000,99999);
+        $inventory->bill_date = date('Y-m-d');
+        $inventory->status = 'in-stock';
 
         $inventory->save();
     }
+
 }
