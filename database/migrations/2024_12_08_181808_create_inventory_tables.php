@@ -22,6 +22,9 @@ return new class extends Migration
             $table->date('purchase_date')->nullable();
             $table->enum('quantity_type' ,[ 'kg', 'gram', 'liter','ml','tin',  'piece',  'dozen', 'box','pack',"other"])->nullable();
             $table->unsignedInteger('quantity')->nullable();
+            $table->string('code_type')->nullable();
+            $table->string('code_number')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->enum('status' ,['in-stock','out-stock','expired','damaged','returned','ordered'])->nullable();
             
             

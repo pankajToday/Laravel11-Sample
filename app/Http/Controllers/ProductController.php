@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductDetailResource;
 use Carbon\Carbon;
 use App\Models\Product;
 use App\Models\Category;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
+use App\Models\ProductDetail;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ProductResource;
@@ -27,24 +29,21 @@ class ProductController extends Controller
         $perPage = $request->input('per_page', 10);
         $selectedCategory =  $request->input('selected_category');
 
-        return ProductResource::collection(
-            Product::query()
-                ->when($sortBy, function($query) use ($sortBy, $sortType) {
-                    // Handle special cases for status field
-                    if ($sortBy === 'status') {
-                        return $query->orderBy('status', $sortType);
-                    }
-                    // Add other special cases if needed
-                    return $query->orderBy($sortBy, $sortType);
-                })
-                ->when($selectedCategory, function($query) use($selectedCategory) {
-                    // Add other special cases if needed
-                    return $query->whereHas('category' , function ($q)use( $selectedCategory ){
-                        $q->where( 'id' , $selectedCategory );
-                    } );
-                })
-                ->orderBy('name' ,'asc')
-                ->get()
+        return ProductDetailResource::collection(
+            ProductDetail::query()
+            ->when( $sortBy, function($query) use ($sortBy, $sortType) { // Add more sorting conditions if needed
+                return $query->whereHas('product', function($q) use ($sortBy, $sortType) {
+                    $q->orderBy($sortBy, $sortType);
+                });
+            })
+            ->when( $selectedCategory, function($query) use($selectedCategory) {
+                return $query->whereHas('product.category', function ($q) use ($selectedCategory) {
+                    $q->where('id', $selectedCategory);
+                });
+            })
+            ->with(['product', 'product.category']) // Eager load relationships
+            ->orderBy('id', 'desc') // Default ordering
+            ->get()
         );
     }
 
@@ -87,7 +86,8 @@ class ProductController extends Controller
             "description" =>  $request->description ,
             "status" =>  $request->status === 'active' ?1:0 ,
             "brand_id" =>  $request->brand_id ,
-            "food_type" =>  $request->food_type ];
+            "food_type" =>  $request->food_type
+         ];
 
             Product::create($data);
 
@@ -117,7 +117,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request , ProductDetail $productDetail )
     {
         $request->validate([
            // 'name' => ['required', 'string', 'max:155', Rule::unique('products')->ignore($product->id)],
@@ -130,10 +130,8 @@ class ProductController extends Controller
              'images' => 'nullable|array',
         ]);
         
-        
-        $product->updateOrCreate(['name' =>  request('name'),'category_id' => request('category_id')],[
+        $productDetail->product()->update([
             "name" =>  $request->name ,
-            "sku" => $this->generateUniqueSKU('Product')  ,
             "category_id" =>  $request->category_id ,
             "type" =>  $request->type ,
             "description" =>  $request->description ,
@@ -141,6 +139,10 @@ class ProductController extends Controller
             "brand_id" =>  $request->brand_id ,
             "food_type" =>  $request->food_type ,
         ]);
+
+
+        
+
         return response()->json(['message' =>'success' ] );
     }
 
@@ -156,6 +158,16 @@ class ProductController extends Controller
         }
         return response()->json(['data' => [] ],503 );
 
+    }
+
+
+    public function getProductUnit( ProductDetail $productDetail , Request $request ){
+        return $productDetail->select('id','unit','unit_size')->where('product_id' , $request->product_id)->get()->transform ( function($item){
+            return [
+                'value' => $item->id,
+                'label' => $item->unit . ' ' . $item->unit_size
+            ];
+        });
     }
 
 

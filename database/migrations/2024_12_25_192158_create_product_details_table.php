@@ -25,9 +25,7 @@ return new class extends Migration
             $table->decimal('discount_amt',2)->nullable();
             $table->string('tax_type')->nullable();
             $table->string('tax_rate')->nullable();
-            $table->string('code_type')->nullable();
-            $table->string('code_number')->nullable();
-            $table->date('expiry_date')->nullable();
+          
 
             $table->timestamps();
             $table->softDeletes();

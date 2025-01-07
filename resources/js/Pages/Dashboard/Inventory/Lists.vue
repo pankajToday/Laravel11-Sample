@@ -119,40 +119,70 @@
                                     <div class="col-4 mb-2">
                                         <label class="col-form-label text-sm-right">Product  <span class="text-red-500">*</span></label>
                                     </div>
-                                    <div  class="col-8" >
+                                    <div  class="col-4" >
                                         <Multiselect
                                         v-model="inventory.product_id"
                                         :options="productList"
                                         :searchable="true"
-                                        :create-option="true"
-                                        :createTag="true"
                                         mode="single"
-                                        placeholder="Select or create products"
+                                        placeholder="Select product"
                                         label="label"
                                         track-by="value"
                                         :required="true"
                                         class="form-control p-0 border-0"
+                                        @update:model-value="fetchProductUnitList"
+                                        :loading="loadingProductList"
+                                        />
+                                    </div>
+                                    <div  class="col-4" >
+                                        <Multiselect
+                                        v-model="inventory.product_detail_id"
+                                        :options="productUnitList"
+                                        :searchable="true"
+                                        mode="single"
+                                        placeholder="Select Product Unit"
+                                        label="label"
+                                        track-by="value"
+                                        :required="true"
+                                        class="form-control p-0 border-0"
+                                        :loading="loadingProductUnitList" 
                                         />
                                     </div>
 
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-4 mb-2">
-                                        <label class="col-form-label text-sm-right">Base Price <span class="text-red-500">*</span></label>
+                                    <div class="col-4">
+                                        <label class="col-form-label text-sm-right">Vendor</label>
                                     </div>
-                                    <div class="col-8">
-                                        <input v-model="inventory.base_price"  class="form-control form-control-lg mb-2" type="number" placeholder="Product Base Price">
+                                    <div class="col-4">
+                                        <input v-model="inventory.vendor"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Vendor">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label class="col-form-label text-sm-right">MRP Price <span class="text-red-500">*</span></label>
+                                        <label class="col-form-label text-sm-right">Bill Number</label>
                                     </div>
-                                    <div class="col-8">
-                                        <input  v-model="inventory.mrp_price" class="form-control form-control-lg mb-2" type="number" placeholder="Product MRP. Price">
+                                    <div class="col-3">
+                                        <input v-model="inventory.bill_number"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Bill Number">
+                                    </div>
+                               
+                                    <div class="col-2">
+                                        <label class="col-form-label text-sm-right">Bill Date</label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input v-model="inventory.bill_date"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Bill Date">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="col-form-label text-sm-right">Batch No.</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <input v-model="inventory.batch_number"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Batch Number">
+                                    </div>
+                                </div>
+
+                            
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="col-form-label text-sm-right">Quantity</label>
@@ -172,71 +202,12 @@
 
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="col-form-label text-sm-right">Sale Price <span class="text-red-500">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input  v-model="inventory.sale_price" class="form-control form-control-lg mb-2" type="number" placeholder="Sale Price">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select  v-model="inventory.discount_id" class="form-control form-control-lg mb-2" >
-                                            <option value="flat" selected>Flat Discount</option>
-                                            <option value="percentage">Percentage %</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-5">
-                                        <input  v-model="inventory.discount_amt" class="form-control form-control-lg mb-2" type="text" placeholder="Max Discount">
-                                    </div>
-                                    <div class="col-1 py-2 cursor-pointer">
-                                          <span class="group relative">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            <ToolTipCom  :message="discountTooltip"></ToolTipCom>
-                                          </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select  v-model="inventory.tax_type" class="form-control form-control-lg mb-2" >
-                                            <option value="gst" selected>GST</option>
-                                            <option value="vat">VAT</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="input-group">
-                                            <span class="input-group-text h-100 form-control-lg">@</span>
-                                            <input v-model="inventory.tax_rate"
-                                                class="form-control form-control-lg mb-2"
-                                                type="text"
-                                                placeholder="Allowed Tax Rate for Goods.">
-                                        </div>
-                                    </div>
-                                    <div class="col-1 py-2 cursor-pointer">
-                                          <span class="group relative">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            <ToolTipCom  :message="taxTooltip"></ToolTipCom>
-                                          </span>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <select  v-model="inventory.code_type" class="form-control form-control-lg mb-2" >
-                                            <option value="barcode" >Barcode</option>
-                                            <option value="qrcode" >QR-code</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-8">
-                                        <input type="number"  v-model="inventory.code_number" class="form-control form-control-lg mb-2"  placeholder="Product Description"></input>
-                                    </div>
-                                </div>
+                                
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="col-form-label text-sm-right">Purchase Date </label>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-3">
                                         <input  v-model="inventory.purchase_date" 
                                         class="form-control form-control-lg mb-2"
                                          type="date" 
@@ -244,17 +215,30 @@
                                          :min="getMin5Date()"
                                          placeholder="Product Expiry Date">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
+                                
+                                    <div class="col-2">
                                         <label class="col-form-label text-sm-right">Expiry </label>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-3">
                                         <input  v-model="inventory.expiry_date" 
                                         class="form-control form-control-lg mb-2"
                                          type="date" 
                                          :min="getMinDate()"
                                          placeholder="Product Expiry Date">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="col-form-label text-sm-right">QR/Bar Code</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <select v-model="inventory.code_type" class="form-control form-control-lg mb-2" >
+                                            <option value="qrcode" >QR Code</option>
+                                            <option value="barcode" >Barcode</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <input v-model="inventory.code_number"  class="form-control form-control-lg mb-2" type="text" placeholder="Product Batch Number">
                                     </div>
                                 </div>
 
@@ -331,8 +315,6 @@
         { text: "Category", value: "category_name", sortable: true ,    width: 180,},
         { text: "Sku", value: "sku", sortable: true, width: 160},
         { text: "Type", value: "product_type", sortable: true, width: 160},
-        { text: "Min Stock", value: "min_stock", sortable: true, width: 60},
-        { text: "Max Stock", value: "max_stock", sortable: true, width: 60},
         { text: "Status", value: "status", sortable: true, width: 90},
 
     ];
@@ -372,7 +354,6 @@
             discount_amt:0,
             tax_type:'gst',
             tax_rate:0,
-            tax_amt:0,
             code_number:0,
             code_type:'',
             expiry_date:"",
@@ -387,13 +368,11 @@
     const productList = ref([])
     const selectedProduct = ref('')
     const unitList = ref([  'kg', 'gram', 'liter','ml',  'piece',  'dozen', 'box','pack',"other" ])
-
-    // file upload....
-    const fileData = ref("")
-    const isDragging= ref(false);
-    const uploading= ref(false);
-    const uploadProgress = ref(0);
-    const maxFileSize = ref(10 * 1024 * 1024) // 10MB in bytes
+    const productUnitList = ref([])
+    const loadingProductUnitList = ref(false)
+    const loadingProductList = ref(false)
+     
+   
 
 
     //--------------- define  function ================
@@ -436,6 +415,27 @@
         }
     };
 
+    const fetchProductUnitList = async () => {
+        try {
+            loadingProductUnitList.value = true;
+            productUnitList.value = [];
+
+            const response = await axios.post( 'api/get-product-unit', { product_id : inventory.value.product_id  });
+
+            if (response.status === 200) {
+                productUnitList.value.push({value:'',label:'Select Unit'})
+                productUnitList.value= response.data; 
+               
+                inventory.value.product_detail_id = '';//response.data[0].value;
+                loadingProductUnitList.value = false;
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            loadingProductUnitList.value = false;   
+        }
+    };
+
     const fetchInventory = async () => {
         loading.value = true;
         try {
@@ -459,10 +459,9 @@
                     product_name:item.product_name ,
                     product_img:item.product_img,
                     sku:item.product_sku,
-                    min_stock:item.min_stock_hold,
-                    max_stock:item.min_stock_hold,
+                    product_type:item.product_type,
                     status:item.status,
-                    'inventory' : item.inventory.map( (inventory,s) => ({
+                    'inventory' : item.inventory.map( (inventory) => ({
                         "id": inventory.id ,
                         "sku" : inventory.sku ,
                         "product_id" : inventory.product_id ,
@@ -476,7 +475,6 @@
                         "discount_amt" : inventory.discount_amt ,
                         "tax_type" : inventory.tax_type ,
                         "tax_rate" : inventory.tax_rate ,
-                        "tax_amt" : inventory.tax_amt ,
                         "expiry_date" : inventory.expiry_date ,
                         "purchase_date" : inventory.purchase_date ,
                         "code_type" : inventory.code_type ,
@@ -550,7 +548,7 @@
     }
 
     const fetchProductList=  async () => {
-        loading.value = true;
+        loadingProductList.value = false; 
         try {
             const response = await axios.get(route('products.index'), {
                 params: {}
@@ -562,11 +560,12 @@
                     label: item.name, 
                     value: item.id
                 }));
+                loadingProductList.value = false;
             }
         } catch (error) {
             console.log(error);
         } finally {
-            loading.value = false;
+            loadingProductList.value = false;
         }
     };
 

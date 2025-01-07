@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::Resource("/categories",CategoryController::class);
     Route::Resource("/products",ProductController::class);
     Route::post("/get-brands",[ProductController::class,'getBrands']);
+    Route::post("/get-product-unit",[ProductController::class,'getProductUnit']);
 
     Route::Resource("/inventories",InventoryController::class);
 

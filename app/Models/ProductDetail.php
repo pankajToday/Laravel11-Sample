@@ -14,7 +14,7 @@ class productDetail extends Model
     public $table ="product_details";
     public $guarded =[];
 
-    function productDetail(){
+    function product(){
         return $this->belongsTo( Product::class );
     }
 

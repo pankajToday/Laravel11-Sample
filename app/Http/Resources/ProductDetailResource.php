@@ -23,18 +23,37 @@ class ProductDetailResource extends JsonResource
        // return parent::toArray($request);
 
         return [
-                 "id" => $this->id ,
-                 "name" => $this->name ,
-                 "category_id" => $this->category_id ,
-                 "category_name" =>$this->category ? $this->category->name:"N/A"  ,
-                 "sku" => $this->sku ,
-                 "type" => $this->type ,
-                 "brand_id" => $this->brand_id ?? "N/A" ,
-                 "price" => $this->getPrices( $this->id ) ,
-                 "description" => $this->description ,
-                 'image' => $this->baseImage ? $this->baseImage->url:"/assets/img/dummy-product-5.jpg",
-               //  'product_detail' => $this->productDetail ? $this->getProductDetails($this->productDetail):[],
-                 "product_status" => $this->status ,
+            // product 
+            "id" => $this->id ,
+            "product_id" => $this->product_id ,
+            "name" => $this->product ? $this->product->name : '',
+            "category_id" => $this->product ? $this->product->category_id : "",
+            "category_name" => $this->product ? $this->product->category->name : "N/A"  ,
+            "sku" => $this->product ? $this->product->sku :"",
+            "type" => $this->product ? $this->product->type :"",
+            "brand_id" => $this->product ? $this->product->brand_id : "N/A" ,
+            "description" => $this->product ? $this->product->description :"",
+            'image' => $this->product && $this->product->baseImage ? $this->product->baseImage->url:"/assets/img/dummy-product-5.jpg",
+            "product_status" =>$this->product ? $this->product->status :"",
+            "food_type" => $this->product ? Str::ucfirst($this->product->food_type) :"'N/A'",
+
+            // product details
+            "base_price" => $this->base_price,
+             "mrp_price" => $this->mrp_price,
+             "sale_price" => $this->sale_price,
+             "unit" => $this->unit,
+             "unit_size" => $this->unit_size,
+             "min_stock" => $this->min_stock_hold,
+             "max_stock" => $this->max_stock_hold,
+             "discount_id" => $this->discount_id,
+             "discount_amt" => $this->discount_amt,
+             "tax_type" => $this->tax_type,
+             "tax_rate" => $this->tax_rate,
+             "total_quantity" => $this->totalQuantity($this->id),
+             "price" => $this->getPrices($this->id),
+           //  'in_stock_quantity' => $this->totalQuantity( $this->product_id ),
+             "inventory_status" => $this->totalQuantity(  $this->product_id )['quantity'] >  $this->min_stock_hold ? "In-Stock":"Out-Stock",
+             "inventory" => $this->getInventory( $this->inventory ),
 
         ];
     }
@@ -42,8 +61,8 @@ class ProductDetailResource extends JsonResource
 
     function totalQuantity( $productId ){
         return [
-            "quantity" => Inventory::where('product_id' , $productId)->where('status','in-stock')->sum('quantity'),
-            "quantity_type" => Str::ucfirst( @Inventory::where('product_id' , $productId)->where('status','in-stock')->first()->quantity_type),
+            "quantity" => Inventory::where('product_detail_id' , $productId)->where('status','in-stock')->sum('quantity'),
+            "quantity_type" => Str::ucfirst( @Inventory::where('product_detail_id' , $productId)->where('status','in-stock')->first()->quantity_type),
         ];
     }
 
@@ -64,6 +83,9 @@ class ProductDetailResource extends JsonResource
                 "quantity" => $data->quantity,
                 "quantity_type" => $data->quantity_type,
                 "status" =>$data->status,
+                "expiry_date" =>$data->expiry_date,
+                "code_type" =>$data->code_type,
+                "code_number" =>$data->code_number,
             ];
         });
     }

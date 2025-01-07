@@ -15,7 +15,7 @@ class Inventory extends Model
 
     protected  $guarded =[];
 
-    public function product(){
-        return $this->belongsTo( Product::class ,'product_id','id');
+    public function productDetail(){
+        return $this->belongsTo( productDetail::class ,'product_detail_id','id');
     }
 }

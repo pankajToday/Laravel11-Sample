@@ -60,11 +60,11 @@ class ProductImageObserver
     public function updated(Product $product): void
     {
         $webUrl ="";
+        $imageData =@ request('image')['preview']; // data:image/png;base64,iVBORw0KGgoAAA....
+        $file =  @request('image')['name'];
 
-        if(request('image')  ){
-            $imageData = request('image')['preview']; // data:image/png;base64,iVBORw0KGgoAAA....
-            $file = request('image')['name'];
-
+        if( $imageData && $file ){
+           
             // Generate a unique filename to prevent overwriting
             $uniqueFileName = uniqid() . '_' . $file;
             $publicPath = 'upload/product-image/' . $uniqueFileName;
@@ -92,13 +92,14 @@ class ProductImageObserver
 
             // Return the web-accessible URL of the uploaded image
             $webUrl = asset($publicPath);
+
+            $product->baseImage()->updateOrCreate(["product_id" => $product->id ],[
+                "product_id" => $product->id,
+                "type" => 'primary',
+                'url' => request('image')? $webUrl : "/assets/img/dummy-product-5.jpg"
+            ]);
         }
 
-        $product->baseImage()->updateOrCreate(["product_id" => $product->id ],[
-            "product_id" => $product->id,
-            "type" => 'primary',
-            'url' => request('image')? $webUrl : "/assets/img/dummy-product-5.jpg"
-        ]);
     }
 
     /**

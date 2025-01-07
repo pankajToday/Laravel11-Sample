@@ -25,7 +25,7 @@ class InventoryController extends Controller
         $searchByName = $request->input('search');
 
         $inventories =  Inventory::query()
-            ->whereHas('product', function($query) {
+            ->whereHas('productDetail.product', function($query) {
                 $query->withoutTrashed(); // Only include inventories with non-deleted products
             })
             //->with('product')
@@ -38,16 +38,16 @@ class InventoryController extends Controller
                 return $query->orderBy($sortBy, $sortType);
             })
             ->when($selectedCategory, function($query) use($selectedCategory) {
-                return $query->whereHas('product.category', function ($q) use($selectedCategory) {
+                return $query->whereHas('productDetail.product.category', function ($q) use($selectedCategory) {
                     $q->where('id', $selectedCategory);
                 });
             })
             ->when($searchByName, function($query) use($searchByName) {
-                return $query->whereHas('product', function ($q) use($searchByName) {
+                return $query->whereHas('productDetail.product', function ($q) use($searchByName) {
                     $q->where('name','like', '%'. $searchByName.'%');
                 });
             })
-            ->orderBy('product_id', 'asc')
+            ->orderBy('product_detail_id', 'asc')
             ->get();
 
         return new InventoryResource($inventories);
@@ -69,23 +69,18 @@ class InventoryController extends Controller
     {
         $inventory->firstOrCreate([ 'id' =>  request('id') ],[
             "sku" =>  $this->generateUniqueSKU("Inventory") ,
-            "product_id" =>  $request->product_id ,
+            "product_detail_id" =>  $request->product_detail_id ,
+            "vendor" =>  $request->vendor ,
+            "bill_number" =>  $request->bill_number ,
+            "bill_date" =>  $request->bill_date ,
+            "batch_number" =>  $request->batch_number ,
+
             "quantity" =>  $request->quantity ,
             "quantity_type" => $request->quantity_type ,
-            "status" =>  $request->status ,
-            "base_price" =>  $request->base_price ,
-            "mrp_price" =>  $request->mrp_price ,
-            "sale_price" =>  $request->sale_price ,
-            "discount_id" =>  $request->discount_id ,
-            "discount_amt" =>  $request->discount_amt ,
-
-            "tax_type" =>  $request->tax_type ,
-            "tax_rate" =>  $request->tax_rate ,
-            "tax_amt" =>  $request->tax_amt ,
-            "code_type" =>  $request->code_type,
-            "code_number" =>  $request->code_number,
-            "expiry_date" =>  $request->expiry_date ,
             "purchase_date" =>  $request->purchase_date ,
+            "expiry_date" =>  $request->expiry_date ,
+            "code_type" =>  $request->code_type ,
+            "code_number" =>  $request->code_number ,
             "status" =>  $request->status ,
         ]);
 
@@ -105,27 +100,31 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory )
     {
-        $inventory->updateOrCreate([ 'id' =>  request('id') ],[
+        $inventory->update([
             "quantity" =>  $request->quantity ,
             "quantity_type" => $request->quantity_type ,
             "status" =>  $request->status ,
-            "base_price" =>  $request->base_price ,
-            "mrp_price" =>  $request->mrp_price ,
-            "sale_price" =>  $request->sale_price ,
-            "discount_id" =>  $request->discount_type ,
-            "discount_amt" =>  $request->discount_amt ,
-
-            "tax_type" =>  $request->tax_type ,
-            "tax_rate" =>  $request->tax_rate ,
-            "tax_amt" =>  $request->tax_amt ,
-            "code_type" =>  $request->code_type,
-            "code_number" =>  $request->code_number,
-            "expiry_date" =>  $request->expiry_date ,
             "purchase_date" =>  $request->purchase_date ,
+            "expiry_date" =>  $request->expiry_date ,
+            "code_type" =>  $request->code_type ,
+            "code_number" =>  $request->code_number ,
             "status" =>  $request->status ,
 
         ]);
-    return response()->json(['message' =>'success' ] );
+
+        $inventory->productDetail()->update([
+            "base_price" =>  $request->base_price ,
+            "mrp_price" =>  $request->mrp_price ,
+            "sale_price" =>  $request->sale_price ,
+            "discount_id" =>  $request->discount_id ,
+            "discount_amt" =>  $request->discount_amt ,
+            "tax_rate" =>  $request->tax_rate ,
+            "tax_type" =>  $request->tax_type ,
+           
+        ]);
+
+
+    return response()->json(['message' =>'success','e'=>$request->discount_type ] );
     }
 
     /**

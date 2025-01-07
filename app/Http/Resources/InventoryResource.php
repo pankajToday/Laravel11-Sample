@@ -27,43 +27,44 @@ class InventoryResource extends ResourceCollection
      * @return array
      */
     protected function processInventories()
-    {
+    { 
         // Group inventories by product
-        $groupedInventories = $this->collection->groupBy('product_id')->map(function ($inventoryItems) {
+        $groupedInventories = $this->collection->groupBy('product_detail_id')->map(function ($inventoryItems) {
             // Get the first inventory item to extract product information
             $firstItem = $inventoryItems->first();
+            $product = $firstItem->productDetail &&  $firstItem->productDetail->product ? $firstItem->productDetail->product : null;
 
             return [
-                'product_id' => $firstItem->product_id,
-                'product_name' => $firstItem->product ? $firstItem->product->name : null,
-                "category_id" =>$firstItem->product &&  $firstItem->product->category ? $firstItem->product->category->id :"",
-                "category_name" => $firstItem->product &&  $firstItem->product->category ? $firstItem->product->category->name :"",
-                "product_img" => $firstItem->product->baseImage ?  $firstItem->product->baseImage->url :"/assets/img/dummy-product-5.jpg",
-                'product_sku' => $firstItem->product ? $firstItem->product->sku : null,
-                'product_type' => $firstItem->product ? $firstItem->product->type : null,
-                "min_stock_hold" =>  $firstItem->product ? $firstItem->product->min_stock_hold :0,
-                "max_stock_hold" => $firstItem->product ? $firstItem->product->max_stock_hold :0,
-                "status" => $firstItem->product ? $firstItem->product->status :'N/A',
+                'product_id' => $product->id,
+                'product_detail_id' => $firstItem->product_detail_id,
+                'product_name' =>  $product ?  $product->name : null,
+                "category_id" => $product &&   $product->category ?  $product->category->id :"",
+                "category_name" =>  $product &&   $product->category ?  $product->category->name :"",
+                "product_img" =>  $product->baseImage ?   $product->baseImage->url :"/assets/img/dummy-product-5.jpg",
+                'product_sku' =>  $product ?  $product->sku : null,
+                'product_type' =>  $product ?  $product->type : null,
+                "status" =>  $product ?  $product->status :'N/A',
                 'inventory' => $inventoryItems->map(function ($inventory) {
+                   
                     return [
                         "id"  => $inventory->id ,
                         "sku" => $inventory->sku,
-                        "product_id" => $inventory->product_id,
+                        "product_id" => $inventory->productDetail && $inventory->productDetail->product ?  $inventory->productDetail->product->id :"",
+                        "product_detail_id" => $inventory->product_detail_id,
                         "quantity" => $inventory->quantity,
                         "quantity_type" => $inventory->quantity_type,
                         "status" =>$inventory->status,
-                        "base_price" => $inventory->base_price,
-                        "mrp_price" => $inventory->mrp_price,
-                        "sale_price" => $inventory->sale_price,
-                        "discount_id" => $inventory->discount_id,
-                        "discount_amt" => $inventory->discount_amt,
-                        "tax_type" => $inventory->tax_type,
-                        "tax_rate" => $inventory->tax_rate,
-                        "tax_amt" => $inventory->tax_amt,
-                        "expiry_date" => $inventory->expiry_date ? Carbon::parse($inventory->expiry_date)->format('Y-m-d'):"",
+                        "base_price" => $inventory->productDetail ? $inventory->productDetail->base_price:0,
+                        "mrp_price" => $inventory->productDetail ? $inventory->productDetail->mrp_price:0,
+                        "sale_price" =>  $inventory->productDetail ? $inventory->productDetail->sale_price:0,
+                        "discount_id" =>  $inventory->productDetail ? $inventory->productDetail->discount_id:0,
+                        "discount_amt" => $inventory->productDetail ? $inventory->productDetail->discount_amt:0,
+                        "tax_type" =>  $inventory->productDetail ? $inventory->productDetail->tax_type:'',
+                        "tax_rate" =>  $inventory->productDetail ? $inventory->productDetail->tax_rate:0,
+                        "expiry_date" =>  $inventory->expiry_date ? Carbon::parse( $inventory->expiry_date)->format('Y-m-d'):"",
                         "purchase_date" => $inventory->purchase_date ? Carbon::parse($inventory->purchase_date)->format('Y-m-d'):"",
-                        "code_type" => $inventory->code_type,
-                        "code_number" => $inventory->code_number ,
+                        "code_type" =>  $inventory->code_type,
+                        "code_number" => $inventory->code_number,
                         // Add any other relevant inventory fields
                     ];
                 })->values()->toArray()
