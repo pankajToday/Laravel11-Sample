@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
-
-use App\Traits\CommonTrait;
 
 
 
@@ -23,10 +21,11 @@ Route::inertia('/privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 Route::group(['middleware' => 'auth' ], function () {
     Route::inertia('/dashboard', 'Dashboard/Home');
     Route::inertia('/profile', 'Dashboard/Profile');
-    Route::inertia('/categories', 'Dashboard/Category/Lists');
-    Route::inertia('/products', 'Dashboard/Product/Lists');
-    Route::inertia('/inventory', 'Dashboard/Inventory/Lists');
+    Route::inertia('/categories', 'Dashboard/Category/List');
+    Route::inertia('/products', 'Dashboard/Product/List');
+    Route::inertia('/inventory', 'Dashboard/Inventory/List');
     Route::inertia('/dashboard-2', 'Dashboard/Dashboard');
+    Route::inertia('/vendors', 'Dashboard/Vendor/List');
 });
 
 

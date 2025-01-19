@@ -29,6 +29,14 @@ return new class extends Migration
             $table->string('mobile',10)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('mobile_verified')->default(0);
+            $table->string('profile_img')->nullable();
+            $table->string('address')->nullable();
+            $table->string('streat_location')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->string('zip_code',10)->nullable();  
+            $table->boolean('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

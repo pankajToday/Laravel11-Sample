@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,22 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post("/login",[LoginController::class,'login']);
-Route::post("/forget-password" , [ LoginController::class ,'forgetPassword']);
-Route::post("/reset-password" , [ LoginController::class ,'resetPassword']);
-
-
+Route::post("/login",[\App\Http\Controllers\Auth\LoginController::class,'login']);
+Route::post("/forget-password" , [ \App\Http\Controllers\Auth\LoginController::class ,'forgetPassword']);
+Route::post("/reset-password" , [ \App\Http\Controllers\Auth\LoginController::class ,'resetPassword']);
 
 
 
 # Api for Dashboard Users.......................
 Route::middleware('auth:sanctum')->group( function () {
 
-    Route::Resource("/categories",CategoryController::class);
-    Route::Resource("/products",ProductController::class);
-    Route::post("/get-brands",[ProductController::class,'getBrands']);
-    Route::post("/get-product-unit",[ProductController::class,'getProductUnit']);
+    Route::Resource("/categories",\App\Http\Controllers\CategoryController::class);
+    Route::Resource("/products",\App\Http\Controllers\ProductController::class);
+    Route::post("/get-brands",[\App\Http\Controllers\ProductController::class,'getBrands']);
+    Route::post("/get-product-unit",[\App\Http\Controllers\ProductController::class,'getProductUnit']);
 
-    Route::Resource("/inventories",InventoryController::class);
+    Route::Resource("/inventories",\App\Http\Controllers\InventoryController::class);
+    Route::Resource("/vendor" , \App\Http\Controllers\VendorController::class);
 
 });
