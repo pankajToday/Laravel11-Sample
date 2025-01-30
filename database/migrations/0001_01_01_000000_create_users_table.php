@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('name',80);
             $table->string('email',80)->unique();;
             $table->string('password');
+            $table->string('country_code',10)->nullable();
             $table->string('mobile',10)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('mobile_verified')->default(0);
@@ -41,7 +42,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('role_id')->on('roles')->references('id')->cascadeOnDelete();
+           // $table->foreign('role_id')->on('roles')->references('id')->cascadeOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

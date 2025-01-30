@@ -4,10 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use function Carbon\this;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -45,6 +46,19 @@ class User extends Authenticatable
 
     function userRole(){
         return $this->belongsTo(UserRole::class);
+    }
+
+    function userVendor(){
+        return $this->belongsToMany( User::class ,'user_vendor' ,'user_id','vendor_id');
+    }
+
+    function vendorUser(){
+        return $this->belongsToMany( User::class ,'user_vendor' ,'vendor_id','user_id');
+    }
+
+    function vendorDetail(){
+       // DB::listen( function ($query) { dd(  $query->sql , $query->bindings ) ; } );
+        return $this->hasOne( VendorDetail::class ,'user_id','id');
     }
 
 

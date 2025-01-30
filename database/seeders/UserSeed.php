@@ -22,20 +22,55 @@ class UserSeed extends Seeder
                 'email' => 'ankuprsdpkp@gmail.com',
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
-                'mobile' => '9031251290'
+                'mobile' => '9031251290',
+                'country_code' => '+91',
+                'profile_img' => 'https://shorturl.at/YbVus'
             ],
             [
-                'role_id' => 1,
+                'role_id' => 2,
+                'name' => 'Site User',
+                'email' => 'siteUser@gmail.com',
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+                'mobile' => '9031201290',
+                'country_code' => '+91',
+                 'profile_img' => 'https://shorturl.at/YbVus'
+            ],
+            [
+                'role_id' => 3,
                 'name' => 'Demo User',
                 'email' => 'demo@example.com',
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
+                'mobile' => '9030951290',
+                'country_code' => '+91',
+                 'profile_img' => 'https://shorturl.at/YbVus'
+            ],
+            [
+                'role_id' => 4,
+                'name' => 'Vendor User',
+                'email' => 'vendor@example.com',
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+                 'mobile' => '9098787635',
+                'country_code' => '+91',
+                 'profile_img' => 'https://shorturl.at/YbVus'
             ],
         ];
 
         foreach ( $users as $user ){
             User::create( $user );
         }
+
+        $vendorDetail =  [
+            'user_id' => 4,
+            'name' => 'Vendor User Shop',
+            'email' => 'vendor@example.com',
+             'mobile' => '9098787635',
+            'country_code' => '+91',
+            'shop_img' => 'https://shorturl.at/9bReg',
+        ]; 
+
 
     }
 }

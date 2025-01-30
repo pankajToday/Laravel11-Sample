@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class VendorDetail extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    protected $table = "vendor_details";
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
