@@ -358,7 +358,7 @@
     import 'sweetalert2/src/sweetalert2.scss'
 
     //---------------  define  data ================
-    const  pageName = ref("Vendor");
+    const  pageName = ref("Master Glossary");
     const loading = ref(false)
     const selectedItems = ref([]);
     const serverItemsLength = ref(0);
@@ -370,12 +370,11 @@
     });
 
     const headers = [
-            { text: "Owner Name", value: "name", sortable: true , fixed: true,   width: 150,},
+            { text: "User Name", value: "user_name", sortable: true , fixed: true,   width: 150,},
             { text: "Shop Name", value: "shop_name", sortable: true,fixed: true, width: 200},
-            { text: "Email", value: "email", sortable: true,fixed: true, width: 130},
-            { text: "Mobile", value: "mobile", sortable: true,fixed: true, width: 110},
-            { text: "Shop Email", value: "shop_email", sortable: true,fixed: true, width: 130},
-            { text: "Shop Phone", value: "shop_mobile", sortable: true,fixed: true, width: 130},
+            { text: "List Name", value: "list_name", sortable: true,fixed: true, width: 130},
+            { text: "Items", value: "item_count", sortable: true,fixed: true, width: 130},
+           
             { text: "Status", value: "status", sortable: true,fixed: true, width: 70},
             { text: "Action", value: "actions", fixed: true, width: 300, sortable: false,
                 html: true// Enable HTML rendering for this column
@@ -391,23 +390,13 @@
     const vendor = ref({id:"",name:"",type:"",status:"inactive"});
     const addVendorModel = ref(false);
 
-    // file upload....
-    const fileData = ref("")
-    const isDragging= ref(false);
-    const uploading= ref(false);
-    const uploadProgress = ref(0);
-    const maxFileSize = ref(10 * 1024 * 1024) // 10MB in bytes
-
-
-   
-    
 
     // Add these methods to handle edit and delete actions
 
-    const fetchVendors = async (updateOptions) => {
-        loading.value = true;
+    const fetchList = async (updateOptions) => {
+        loading.value = true; 
         try {
-            const response = await axios.get(route('vendor.index'), {
+            const response = await axios.get(route('master-glossary.index'), {
                 params: {
                     page: serverOptions.value.page,
                     per_page: serverOptions.value.rowsPerPage,
@@ -423,19 +412,11 @@
 
                 items.value = response.data.data.map(item => ({
                     id:item.id,
-                    name:item.name,
-                    email :item.email , 
-                    country_code : item.country_code ,
-                    mobile : item.mobile, 
-                    status : item.status, 
-                    user_id :item.user_id, 
-                    user_image:item.user_image,
-                    shop_name :item.shop_name, 
-                    shop_email  :item.shop_email,
-                    shop_country_code: item.shop_country_code,
-                    shop_mobile : item.shop_mobile,
-                    website: item.website,
-                    shop_image : item.shop_image,
+                    list_name:item.name,
+                    shop_name :item.kirana_vendor_name , 
+                    item_count : item.item_count ,
+                    user_name : item.user_name, 
+                    status : item.status ? 'Active':"Inactive", 
                     actions: `
                         <button class="text-blue-500 hover:text-blue-700 mr-2" @click="editVendor(${JSON.stringify(item)})">Edit</button>
                         <button class="text-red-500 hover:text-red-700" @click="deleteVendor(${item.id})">Delete</button>
@@ -452,7 +433,7 @@
         }
     };
 
-    const editVendor = (item) => {
+    const editVendor = (item) => { console.log(item);
         // Handle edit action
         addVendorModel.value =true;
         vendor.value ={
@@ -490,7 +471,7 @@
 
                 axios.delete(route('vendor.destroy',id) ).then( async (response)=>{
                     if (response.status === 200) {
-                        await  fetchVendors();
+                        await  fetchList();
                     }
                 }).catch(( err  )=>{
                   console.log(err)
@@ -506,7 +487,7 @@
         axios.post(route('vendor.store'),vendor.value).then((res)=>{
             if( res.status === 200){
                 modalClose();
-                fetchVendors();
+                fetchList();
             }
         }).catch( (err)=>{
            console.log( err);
@@ -521,7 +502,7 @@
             if( res.status === 200){
                 vendor.value = {id:"",name:"",type:"",status:""};
                 addVendorModel.value =false;
-              await  fetchVendors();
+              await  fetchList();
             }
         }).catch( (err)=>{
             console.log( err);
@@ -554,82 +535,6 @@
     }
 
 
-     // file upload
-
-    // For file input change event
-    const handleFileSelect = (e) => {
-        const selectedFiles = Array.from(e.target.files)
-        processFiles(selectedFiles)
-    }
-
-    // For drag and drop
-    const handleDrop = (e) => {
-        const droppedFiles = Array.from(e.dataTransfer.files)
-        processFiles(droppedFiles)
-    }
-
-    const processFiles = (uploadedFiles) => {
-        uploadedFiles.forEach(fileObj => {
-            // Validate file type and size
-            if (!fileObj.type.startsWith('image/')) {
-                alert('Please upload only image files.')
-                return
-            }
-            if (fileObj.size > maxFileSize.value) {
-                alert('File size should not exceed 10MB.')
-                return
-            }
-
-            // Create preview URL
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                product.value.image = {
-                    file:fileObj,
-                    name: fileObj.name,
-                    preview: e.target.result
-                };
-
-            }
-            // Read the actual file object (fileObj), not file.value
-            reader.readAsDataURL(fileObj)
-
-        })
-    }
-
-    const removeFile = (index)=> {
-        //files.splice(index, 1)
-        fileData.value ="";
-    }
-
-     const uploadFiles = async ()=> {
-        if (!file.value) return
-
-        uploading.value = true;
-        uploadProgress.value = 0
-
-        // Simulate upload progress
-        const increment = 100 / file.value.length
-         try {
-             // Here you would normally make an API call to upload the file
-             await simulateFileUpload(file, increment)
-         } catch (error) {
-             console.error('Upload failed:', error)
-             alert(`Failed to upload ${file.name}`)
-         }
-
-        uploading.value = false
-        file.value = '';
-    };
-    // Simulate file upload - replace with actual API call
-    const simulateFileUpload =  (file, increment) =>{
-        return new Promise(resolve => {
-            setTimeout(() => {
-                uploadProgress.value += increment
-                resolve()
-            }, 1000)
-        })
-    }
-
 
     //--------------- data Watchers  ================
     // Add debounce function
@@ -642,7 +547,7 @@
     };
 
     // Debounced version of fetchData
-    const debouncedFetch = debounce( fetchVendors(), 300);
+    const debouncedFetch = debounce( fetchList(), 300);
 
     // Watch for changes in search and server options
     watchEffect(() => {

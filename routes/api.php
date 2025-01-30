@@ -30,5 +30,6 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::Resource("/inventories",\App\Http\Controllers\InventoryController::class);
     Route::Resource("/vendor" , \App\Http\Controllers\VendorController::class);
+    Route::Resource("/master-glossary" , \App\Http\Controllers\MasterGlossaryController::class);
 
 });

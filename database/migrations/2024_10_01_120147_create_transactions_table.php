@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('category_id')->references('id')->on('categories')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('particular_id');
             $table->unsignedBigInteger('payment_id')->nullable();
             $table->string('payment_type')->nullable();

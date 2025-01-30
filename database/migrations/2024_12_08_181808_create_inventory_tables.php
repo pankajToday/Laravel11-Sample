@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->string('sku')->nullable();
-            $table->unsignedBigInteger('product_detail_id')->index();
+            $table->foreignId('product_detail_id')->references('id')->on('products')->constrained()->cascadeOnDelete();
             $table->string("vendor")->nullable()->index();
             $table->string("bill_number")->nullable()->index();
             $table->date("bill_date")->nullable();

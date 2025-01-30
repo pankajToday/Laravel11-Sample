@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_vendor', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('vendor_id');
+            $table->foreignId('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+            $table->foreignId('vendor_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -33,7 +33,7 @@
                                 <li v-for="menu in menuItems" class="sidebar-item">
                                     <a v-if="menu && menu.sub_menu && !menu.sub_menu.length" :href="menu.url"
                                         class="sidebar-link flex">
-                                        <span v-if="!menu.icon" class="align-middle">
+                                        <span v-if="!menu.icon"   class="align-middle">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders"
@@ -54,8 +54,7 @@
                                         <span class="align-middle">{{ menu.name }}</span>
                                         <!-- <span class="badge badge-sidebar-primary">5</span>-->
                                     </a>
-
-                                    <a v-else :data-bs-target="'#' + menu.slug" data-bs-toggle="collapse"
+                                    <a @click="menu.isCollapsed = !menu.isCollapsed" v-else  data-bs-toggle="collapse"
                                         class="sidebar-link flex collapsed">
                                         <span v-if="!menu.icon" class="align-middle">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -75,23 +74,22 @@
                                         </span>
                                         <span v-else class="align-middle" v-html="menu.icon"></span>
 
-                                        <span class="align-middle">{{ menu.name }}</span>
+                                        <span class="align-middle">  {{ menu.name }}</span>
                                         <!-- <span class="badge badge-sidebar-primary">5</span>-->
-
-                                        <ul :id="menuItems.slug" class="sidebar-dropdown list-unstyled collapse "
-                                            data-bs-parent="#sidebar">
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link flex" :href="menu.url">
-                                                    {{ menu.name }}
-                                                    <!--<span class="badge badge-sidebar-primary">5</span>-->
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </a>
+                                    <ul v-if="  menu && menu.sub_menu && menu.sub_menu.length"  :id="menu.slug" :class="menu.isCollapsed?'collapsed':'collapse'" class="sidebar-dropdown list-unstyled  ">
+                                        <li v-for=" (subMenu ,i ) in menu.sub_menu"  class="sidebar-item">
+                                            <a class="sidebar-link flex" :href="subMenu.url">
+                                              >  {{ subMenu.name }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    
                                 </li>
+
                                 <li class="sidebar-item">
                                     <a data-bs-target="#ecommerce" data-bs-toggle="collapse"
-                                        class="sidebar-link flex flex collapsed">
+                                        class="sidebar-link flex  collapsed">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-bag"
@@ -104,7 +102,7 @@
                                     </a>
                                     <ul id="ecommerce" class="sidebar-dropdown list-unstyled collapse "
                                         data-bs-parent="#sidebar">
-                                        <li class="sidebar-item"><a class="sidebar-link flex flex"
+                                        <li class="sidebar-item"><a class="sidebar-link flex"
                                                 href="https://appstack.bootlab.io/ecommerce-products">
                                                 Products <span class="badge badge-sidebar-primary">New</span>
                                             </a></li>
@@ -174,6 +172,8 @@ const menuItems = ref([
         url: "/dashboard",
         icon: "",
         sub_menu: [],
+        isCollapsed: false,
+
     },
     {
         name: "Category",
@@ -187,6 +187,7 @@ const menuItems = ref([
 </svg>
 `,
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Vendor",
@@ -201,6 +202,7 @@ const menuItems = ref([
 </svg>
 `,
         sub_menu: [],
+        isCollapsed: false,
     },
 
     {
@@ -214,6 +216,7 @@ const menuItems = ref([
 </svg>
 `,
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Inventory",
@@ -221,6 +224,7 @@ const menuItems = ref([
         url: "/inventory",
         icon: "",
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Order",
@@ -231,6 +235,7 @@ const menuItems = ref([
         <polyline points="22 4 12 14.01 9 11.01"/>
     </svg>`,
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Glossary List",
@@ -243,7 +248,21 @@ const menuItems = ref([
         <path d="M4 18h10"/>
         <rect x="4" y="4" width="16" height="16" rx="2"/>
     </svg>`,
-        sub_menu: [],
+        sub_menu: [
+            {
+                name: "Master Glossary",
+                slug: "master-glossary",
+                url: "/master-glossary",
+                isCollapsed: false,
+            },
+            {
+                name: "user Glossary",
+                slug: "user-glossary",
+                url: "/user-glossary",
+                isCollapsed: false,
+            },
+        ],
+        isCollapsed: false,
     },
     {
         name: "Payment",
@@ -256,6 +275,7 @@ const menuItems = ref([
 </svg>
 `,
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Barrows",
@@ -263,6 +283,7 @@ const menuItems = ref([
         url: "/barrows",
         icon: "",
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Expences",
@@ -270,6 +291,7 @@ const menuItems = ref([
         url: "/expences",
         icon: "",
         sub_menu: [],
+        isCollapsed: false,
     },
     {
         name: "Todo Dairy",
@@ -277,6 +299,7 @@ const menuItems = ref([
         url: "/todo-dairy",
         icon: "",
         sub_menu: [],
+         isCollapsed: false,
     }
 ]);
 

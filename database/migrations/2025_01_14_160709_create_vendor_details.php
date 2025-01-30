@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('vendor_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+            $table->string('type',80)->nullable();
             $table->string('name',100);
             $table->string('email',80)->nullable();
             $table->string('country_code',6)->nullable();
